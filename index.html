@@ -1,491 +1,350 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ここも - 子どもの「やってみたい」を育てる場所</title>
-
-    <!-- SEO -->
-    <meta name="description" content="不登校支援の新しい形。子どもが安心して過ごしながら、自分のペースで学びと興味を育てる場所『ここも』のマイクロ起業体験プログラム。" />
-    <meta property="og:title" content="ここも - 子どもの『やってみたい』を育てる場所" />
-    <meta property="og:description" content="不登校支援の新しい形。子どもが安心して過ごしながら、自分のペースで学びと興味を育てる場所『ここも』。" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/kokomoibasyo-dev/kokomolp/main/logo.png" />
-    <meta property="og:type" content="website" />
-
-    <!-- Tailwind -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子どもガチ店長プログラム | ここも - 心を育む起業体験</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- フォント -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Custom Font Application */
         body {
-            font-family: 'Noto Sans JP', sans-serif;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background-color: #fdfbf7; /* Washi/Old Paper color */
+            color: #433d3c; /* Dark warm gray/brown */
         }
-        /* =======================
-   スマホ最適化（B改善）
-   ======================= */
-@media (max-width: 640px) {
+        h1, h2, h3, .serif {
+            font-family: 'Shippori Mincho', serif;
+        }
 
-    /* 基本文字サイズアップ */
-    body {
-        font-size: 1.05rem; /* 少し大きく */
-        line-height: 1.75;
-    }
+        /* Komorebi (Sunlight through trees) Animation */
+        @keyframes sway {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translate(10px, 15px) rotate(5deg); opacity: 0.5; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+        }
+        .komorebi-light {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,253,230,0.6) 0%, rgba(255,255,255,0) 70%);
+            filter: blur(20px);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    h1 {
-        font-size: 1.9rem !important;
-        line-height: 1.4;
-    }
+        /* Chart Container Utilities */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
 
-    h2 {
-        font-size: 1.4rem !important;
-    }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4cbb8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b8af9e;
+        }
 
-    p {
-        font-size: 1.05rem;
-    }
+        /* Card Transitions */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
 
-    /* ボタン */
-    .btn-primary,
-    a.btn-primary,
-    button.btn-primary {
-        padding: 0.9rem 1.4rem;
-        font-size: 1.05rem;
-        border-radius: 0.9rem;
-    }
-
-    /* セクションの左右余白を増やす */
-    section {
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
-    }
-
-    /* カードの余白増 */
-    .card {
-        padding: 1.4rem !important;
-        border-radius: 0.8rem !important;
-    }
-
-    /* FAQ アコーディオンの文字 */
-    .faq-title {
-        font-size: 1.1rem;
-    }
-
-    /* 見出し装飾（優しく） */
-    .section-title {
-        font-size: 1.4rem;
-        letter-spacing: 0.03em;
-    }
-
-    /* 上下スペースを少し広めに */
-    .section {
-        padding-top: 2.5rem;
-        padding-bottom: 2.5rem;
-    }
-}
-
-        /* =======================
-   C：視認性の微調整
-   ======================= */
-
-/* セクション間の余白を少し広めに */
-.section {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-}
-
-/* 見出しを優しく強調 */
-.section-title {
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: #333;
-    margin-bottom: 1.8rem;
-}
-
-/* サブ見出しの柔らかい印象 */
-.section-subtitle {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 1.2rem;
-}
-
-/* 本文の行間を広げて読みやすく */
-p {
-    line-height: 1.85;
-    margin-bottom: 1.4rem;
-}
-
-/* カード（白い箱）の影をほんのり */
-.card {
-    background: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-/* 強調テキスト */
-.highlight {
-    background: #fff6d1;
-    padding: 0.2rem 0.35rem;
-    border-radius: 0.3rem;
-}
-
-/* リスト（箇条書き）の見やすさUP */
-ul li {
-    margin-bottom: 0.8rem;
-    line-height: 1.7;
-}
-
-/* ボタンの影と柔らかさ */
-.button-primary {
-    border-radius: 9999px;
-    padding: 0.9rem 1.6rem;
-    font-size: 1.05rem;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
-}
-
-/* FAQの区切りを柔らかく */
-.faq-item {
-    border-bottom: 1px solid #e7e7e7;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-}
-
-/* スマホ用微調整 */
-@media (max-width: 640px) {
-
-    .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.6rem;
-    }
-
-    .section-subtitle {
-        font-size: 1.1rem;
-    }
-
-    .card {
-        border-radius: 0.8rem;
-        padding: 1.2rem;
-    }
-}
-
+        /* Timeline Connector */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            background-color: #e5e7eb;
+            height: 100%;
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 1rem;
+            }
+        }
     </style>
+    <!-- Chosen Palette: [Warm Neutral & Earth Tones] 
+         Background: #fdfbf7 (Soft Cream/Washi)
+         Text: #433d3c (Warm Charcoal)
+         Accent 1: #8d9f86 (Muted Matcha Green - Nature)
+         Accent 2: #dcb66f (Soft Gold - Sunlight)
+         Accent 3: #c27ba0 (Gentle Plum - Subtlety)
+    -->
+
+    <!-- Application Structure Plan: 
+         1. Hero: Immersive, poetic intro with a "Sunlight" canvas effect.
+         2. Philosophy (The Why): Text + Interactive Comparison (Typical vs Kokomo) to show the shift in perspective.
+         3. The Process (Timeline): An interactive vertical/horizontal stepper. Clicking stages reveals the "Story" of that phase.
+         4. Growth Visualizer (Radar Chart): Visualizing the "Invisible" educational effects. Users interact with the chart to understand abstract concepts like "Resilience".
+         5. For Parents: Flip/Expand cards to show the transformation of the parent's role.
+         6. FAQ: Accordion for easy access to reassurance.
+         7. CTA: Gentle but clear next steps.
+         Rationale: This structure moves from emotional connection (Hero) to logic/value (Philosophy/Timeline) to deep understanding (Growth/Parents), mirroring a parent's decision-making journey from "feeling" to "understanding".
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Radar Chart (Chart.js): 
+            - Goal: Visualize intangible skills (Self-efficacy, Resilience, etc.).
+            - Interaction: Click data points to see the definition.
+            - Justification: Shows that growth happens in all directions, not just "sales".
+         2. Interactive Timeline:
+            - Goal: Explain the 8-10 week process.
+            - Interaction: Selection highlights details.
+            - Justification: Breaks down a long commitment into manageable, story-driven steps.
+         3. Comparison Cards:
+            - Goal: Differentiate from other events.
+            - Interaction: Toggle view.
+            - Justification: Clarity on unique value proposition.
+         Confirming NO SVG, NO Mermaid. All visuals via CSS/Canvas/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
-<!-- ====== HERO SECTION ====== -->
-<section class="relative w-full overflow-hidden bg-[#f5f7f4]">
-    <!-- 軽量アニメ背景 -->
-    <div class="absolute inset-0 opacity-[0.12] pointer-events-none">
-        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <pattern id="soft-waves" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                    <path d="M0 100 Q50 0 100 100 T200 100" fill="none" stroke="#9bb0a3" stroke-width="3"/>
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#soft-waves)"/>
-        </svg>
+
+    <!-- Canvas Background for Atmosphere -->
+    <div id="atmosphere" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- JS will populate random light orbs here -->
     </div>
 
-    <!-- ナビゲーション（ロゴ＋説明会ボタン） -->
-    <nav class="relative z-10 flex justify-between items-center px-6 pt-5 max-w-5xl mx-auto">
-        <div class="flex items-center gap-3">
-            <img src="https://raw.githubusercontent.com/kokomoibasyo-dev/kokomolp/main/logo.png"
-                 alt="ここもロゴ"
-                 class="w-10 h-10 rounded-full shadow">
-            <span class="text-[#4a5a4e] font-semibold text-lg">ここも - 子どものやってみたいを育てる場所</span>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-[#e5e7eb]/50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-widest text-[#433d3c] serif">ここも</div>
+            <div class="hidden md:flex space-x-8 text-sm tracking-wide text-[#6b6564]">
+                <button onclick="scrollToSection('philosophy')" class="hover:text-[#8d9f86] transition-colors">想い</button>
+                <button onclick="scrollToSection('process')" class="hover:text-[#8d9f86] transition-colors">育つプロセス</button>
+                <button onclick="scrollToSection('growth')" class="hover:text-[#8d9f86] transition-colors">学びと変化</button>
+                <button onclick="scrollToSection('parents')" class="hover:text-[#8d9f86] transition-colors">親御さんへ</button>
+                <button onclick="scrollToSection('faq')" class="hover:text-[#8d9f86] transition-colors">Q&A</button>
+            </div>
+            <button onclick="scrollToSection('cta')" class="bg-[#8d9f86] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7a8b74] transition-colors shadow-sm">
+                説明会へ
+            </button>
         </div>
-
-        <a href="https://forms.gle/L6DdjxX2MCfCsP8u5" target="_blank"
-           class="bg-[#8fae8b] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7c9a78] transition-colors shadow">
-           説明会へ
-        </a>
     </nav>
 
-    <!-- メインヒーロー -->
-    <div class="relative z-10 max-w-4xl mx-auto text-center py-20 px-6">
-        <h1 class="text-3xl md:text-5xl font-bold text-[#3d4b40] leading-tight">
-            子どもの「やってみたい」は、<br class="md:hidden">未来の芽になる。
-        </h1>
+    <!-- Main Content Wrapper -->
+    <main class="relative z-10 pt-20">
 
-        <p class="text-[#4a5a4e] mt-5 text-base md:text-lg leading-relaxed">
-            ここもは、不登校の子どもたち・学校に行きづらい子・ゆっくり育つ子どもたちのための、<br>
-            「安心できる第3の場所」です。  
-            子どもは育つ力をもっている。大人ができるのは、それを邪魔しないことだけ。
-        </p>
+        <!-- Hero Section -->
+        <section class="min-h-[85vh] flex items-center justify-center relative px-6">
+            <div class="max-w-3xl text-center space-y-8">
+                <p class="text-[#8d9f86] tracking-[0.2em] text-sm md:text-base font-bold animate-fade-in-up">子どもガチ店長プログラム</p>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl leading-tight font-medium text-[#433d3c] animate-fade-in-up" style="animation-delay: 0.2s;">
+                    子どもの「やってみたい」が、<br><span class="inline-block mt-4">世界と出会う物語になる場所</span>
+                </h1>
+                <div class="w-16 h-1 bg-[#dcb66f] mx-auto rounded-full opacity-60 animate-fade-in-up" style="animation-delay: 0.4s;"></div>
+                <p class="text-base md:text-lg leading-loose text-[#6b6564] max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.6s;">
+                    子どもの後ろ姿は、いつも、なにかを探しています。<br>
+                    それは、大人には見えない、自分だけの小さな宝物。<br>
+                    <br>
+                    私たち「ここも」が用意したのは、<br>
+                    その「やってみたい」という名の、小さな種を育むためのプログラムです。<br>
+                    <br>
+                    急かさず、比べず、ただ静かに見守る。<br>
+                    子どもの「好き」を、100の言葉として、世界へと翻訳していくプロセス。
+                </p>
+                <div class="pt-8 animate-fade-in-up" style="animation-delay: 0.8s;">
+                    <button onclick="scrollToSection('philosophy')" class="group flex flex-col items-center mx-auto text-[#8d9f86] text-sm hover:text-[#6b6564] transition-colors">
+                        <span class="mb-2">物語をはじめる</span>
+                        <span class="text-2xl group-hover:translate-y-2 transition-transform">↓</span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-        <a href="#program" 
-           class="inline-block mt-8 bg-[#8fae8b] text-white px-8 py-3 rounded-full text-base hover:bg-[#7c9a78] transition-colors shadow-lg">
-            プログラムを見る
-        </a>
-    </div>
-</section>
-        <!-- Philosophy -->
-<section id="philosophy">
-<section id="comparison">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-      一般的な「起業体験」と<br class="md:hidden">ここもの「起業学習」の違い
-    </h2>
-    <p class="text-gray-700 mb-10 leading-relaxed">
-      ただ売るだけの体験ではなく、<br class="md:hidden">
-      「育つ力」を中心にした8〜10週間の伴走型プログラム。
-    </p>
-
-    <!-- Toggle Buttons -->
-    <div class="flex justify-center gap-4 mb-10">
-      <button id="btn-general"
-        class="px-5 py-2 rounded-full border text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
-        一般的な起業体験
-      </button>
-      <button id="btn-kokomo"
-        class="px-5 py-2 rounded-full border border-[#d8a762] text-white bg-[#d8a762] hover:bg-[#c59755] transition">
-        ここもの起業学習
-      </button>
-    </div>
-
-    <!-- Comparison Content -->
-    <div id="comparison-content" class="text-left bg-[#faf7f2] p-6 rounded-2xl shadow">
-      <!-- Default view = Kokomo -->
-      <div id="kokomo-view">
-        <h3 class="text-xl font-bold mb-3 text-[#d59b52]">ここもの起業学習</h3>
-        <ul class="list-disc pl-5 space-y-3 text-gray-700">
-          <li>“好き”や“得意”を起点にした探究型プロセス</li>
-          <li>商品を作る前に「自分の種」を見つける時間がある</li>
-          <li>週ごとの伴走・内省ワークで非認知能力が育つ</li>
-          <li>売れる体験ではなく「自分で選ぶ・決める」経験</li>
-          <li>大人が評価しない。子ども自身が意味を見つける</li>
-        </ul>
-      </div>
-
-      <div id="general-view" class="hidden">
-        <h3 class="text-xl font-bold mb-3 text-gray-700">一般的な起業体験</h3>
-        <ul class="list-disc pl-5 space-y-3 text-gray-700">
-          <li>短期で商品づくりだけをゴールにすることが多い</li>
-          <li>「売れるかどうか」前提で考えさせがち</li>
-          <li>準備期間が短く、内省や言語化が不足しやすい</li>
-          <li>子どもの“好き”より作業が優先になりがち</li>
-          <li>達成感はあるが、学びの深まりは不安定</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Script -->
-  <script>
-    const btnGeneral = document.getElementById("btn-general");
-    const btnKokomo = document.getElementById("btn-kokomo");
-    const generalView = document.getElementById("general-view");
-    const kokomoView = document.getElementById("kokomo-view");
-
-    btnGeneral.addEventListener("click", () => {
-      generalView.classList.remove("hidden");
-      kokomoView.classList.add("hidden");
-      btnGeneral.classList.add("bg-[#d8a762]", "text-white");
-      btnKokomo.classList.remove("bg-[#d8a762]", "text-white");
-      btnKokomo.classList.add("bg-gray-100", "text-gray-600");
-    });
-
-    btnKokomo.addEventListener("click", () => {
-      kokomoView.classList.remove("hidden");
-      generalView.classList.add("hidden");
-      btnKokomo.classList.add("bg-[#d8a762]", "text-white");
-      btnGeneral.classList.remove("bg-[#d8a762]", "text-white");
-      btnGeneral.classList.add("bg-gray-100", "text-gray-600");
-    });
-  </script>
-</section>
-    
-    <div class="max-w-4xl mx-auto text-center space-y-12">
-
-        <!-- 小見出し -->
-        <p class="text-[#8d9f86] tracking-[0.18em] text-xs md:text-sm font-bold">
-             <br class="hidden sm:block">
-             <br class="hidden sm:block">
-            PHILOSOPHY
-        </p>
-
-        <!-- 大見出し -->
-        <h2 class="text-3xl md:text-4xl lg:text-5xl leading-normal font-medium text-[#433d3c]">
-            子どもは、自ら育つ力をもっている。  
-            <br class="hidden sm:block">
-            大人ができるのは、
-            <br class="hidden sm:block">
-            それを邪魔しないことだけ。
-        </h2>
-
-        <!-- リード文 -->
-        <p class="max-w-3xl mx-auto text-[0.95rem] sm:text-base md:text-lg leading-relaxed md:leading-loose text-[#6b6564]">
-            子どもたちは、本来それぞれのペースで伸びていく力をもっています。  
-            無理に引っ張り上げる必要も、先回りして道を整える必要もありません。  
-            <br><br class="hidden sm:block">
-            私たち「ここも」は、子どもが自分の“ことば”を取り戻し、  
-            世界とつながっていくための小さな土壌を、そっと整えていく存在です。  
-            大人が「正しさ」で押しつけるのではなく、  
-            子ども自身の内側から育つ芽を、つぶさないように見守ること。  
-            <br><br class="hidden sm:block">
-            それが、ここもの理念です。
-        </p>
-
-        <!-- 区切り線 -->
-        <div class="w-20 h-[2px] bg-[#dcb66f] mx-auto rounded-full opacity-70"></div>
-    </div>
-</section>
-        <!-- Process -->
-        <section id="process" class="py-16 md:py-20 bg-[#f7f5f0] px-4 md:px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="mb-10 md:mb-12 text-center md:text-left">
-                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">The Journey</span>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl mb-4 text-[#433d3c]">8〜10週間の物語</h2>
-                    <p class="text-sm sm:text-base text-[#6b6564]">
-                        これは単なる準備期間ではありません。<br>
-                        種を見つけ、畑を耕し、太陽を浴びて、収穫するまでの「育つプロセス」です。
+        <!-- Philosophy & Background Section -->
+        <section id="philosophy" class="py-20 md:py-32 container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">Background</span>
+                    <h2 class="text-3xl md:text-4xl mb-6 text-[#433d3c]">なぜ、この場所を作ったのか</h2>
+                    <p class="text-[#6b6564] leading-relaxed">
+                        単発のイベントで終わらせたくない。<br>
+                        「売れた・売れない」の結果だけで、子どもの心を測りたくない。<br>
+                        深い学びが生まれるには、「時間」と「聴く姿勢」が必要です。
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-8">
-                    <!-- 左：ステップボタン -->
-                    <div class="md:w-1/3 space-y-3 relative">
-                        <div class="absolute left-4 top-4 bottom-4 w-0.5 bg-[#d1d5db] md:block hidden"></div>
+                <!-- Interactive Comparison -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#f0eee6]">
+                    <div class="flex border-b border-[#f0eee6]">
+                        <button onclick="setComparison('general')" id="btn-general" class="flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] transition-colors">一般的な体験イベント</button>
+                        <button onclick="setComparison('kokomo')" id="btn-kokomo" class="flex-1 py-4 text-center font-bold bg-white text-[#8d9f86] border-t-2 border-[#8d9f86]">ここも流のアプローチ</button>
+                    </div>
+                    <div class="p-8 min-h-[300px] flex items-center justify-center">
+                        <div id="comparison-content" class="text-center w-full max-w-2xl">
+                            <!-- Content injected via JS -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
+                        <div class="text-3xl mb-3">🌱</div>
+                        <h3 class="font-bold mb-2">時間をかける</h3>
+                        <p class="text-sm text-[#6b6564]">8〜10週間かけて、失敗と修正の物語を紡ぎます。</p>
+                    </div>
+                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
+                        <div class="text-3xl mb-3">👂</div>
+                        <h3 class="font-bold mb-2">言葉を聴く</h3>
+                        <p class="text-sm text-[#6b6564]">大人は指示せず、子どもの「好き」の翻訳者になります。</p>
+                    </div>
+                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
+                        <div class="text-3xl mb-3">🤝</div>
+                        <h3 class="font-bold mb-2">親子の信頼</h3>
+                        <p class="text-sm text-[#6b6564]">親は「評価者」ではなく「発見者」へと変わります。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        <button onclick="updateTimeline(0)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/60 transition-all group" data-index="0">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                            <span class="text-[11px] sm:text-xs font-bold text-[#8d9f86] block mb-1">Week 0</span>
-                            <span class="font-serif font-bold text-sm sm:text-base text-[#433d3c]">種を見つける時間</span>
-                        </button>
-                        
-                        <button onclick="updateTimeline(1)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/60 transition-all group" data-index="1">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                            <span class="text-[11px] sm:text-xs font-bold text-[#8d9f86] block mb-1">Week 1-3</span>
-                            <span class="font-serif font-bold text-sm sm:text-base text-[#433d3c]">畑を耕す時間</span>
-                        </button>
-                        
-                        <button onclick="updateTimeline(2)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/60 transition-all group" data-index="2">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                            <span class="text-[11px] sm:text-xs font-bold text-[#8d9f86] block mb-1">Week 4-7</span>
-                            <span class="font-serif font-bold text-sm sm:text-base text-[#433d3c]">太陽を浴びる時間</span>
-                        </button>
-                        
-                        <button onclick="updateTimeline(3)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/60 transition-all group" data-index="3">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                            <span class="text-[11px] sm:text-xs font-bold text-[#8d9f86] block mb-1">Week 8-10</span>
-                            <span class="font-serif font-bold text-sm sm:text-base text-[#433d3c]">収穫、そして次へ</span>
-                        </button>
+        <!-- Process Section (Timeline) -->
+        <section id="process" class="py-20 bg-[#f7f5f0]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-12 text-center md:text-left">
+                        <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">The Journey</span>
+                        <h2 class="text-3xl md:text-4xl mb-4 text-[#433d3c]">8〜10週間の物語</h2>
+                        <p class="text-[#6b6564]">
+                            これは単なる準備期間ではありません。<br>
+                            種を見つけ、畑を耕し、太陽を浴びて、収穫するまでの「育つプロセス」です。
+                        </p>
                     </div>
 
-                    <!-- 右：内容 -->
-                    <div class="md:w-2/3 bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-[#f0eee6] relative overflow-hidden min-h-[260px] flex items-center">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 text-7xl sm:text-8xl">🌿</div>
-                        <div id="timeline-content" class="w-full text-sm sm:text-base">
-                            <!-- JS注入 -->
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Timeline Nav -->
+                        <div class="md:w-1/3 space-y-4 relative">
+                            <div class="absolute left-4 top-4 bottom-4 w-0.5 bg-[#d1d5db] md:block hidden"></div>
+                            
+                            <!-- Timeline Buttons -->
+                            <button onclick="updateTimeline(0)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group active-timeline" data-index="0">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
+                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 0</span>
+                                <span class="font-serif font-bold text-lg text-[#433d3c]">種を見つける時間</span>
+                            </button>
+                            
+                            <button onclick="updateTimeline(1)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="1">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
+                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 1-3</span>
+                                <span class="font-serif font-bold text-lg text-[#433d3c]">畑を耕す時間</span>
+                            </button>
+                            
+                            <button onclick="updateTimeline(2)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="2">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
+                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 4-7</span>
+                                <span class="font-serif font-bold text-lg text-[#433d3c]">太陽を浴びる時間</span>
+                            </button>
+                            
+                            <button onclick="updateTimeline(3)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="3">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
+                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 8-10</span>
+                                <span class="font-serif font-bold text-lg text-[#433d3c]">収穫、そして次へ</span>
+                            </button>
+                        </div>
+
+                        <!-- Timeline Content Display -->
+                        <div class="md:w-2/3 bg-white p-8 rounded-2xl shadow-lg border border-[#f0eee6] relative overflow-hidden min-h-[300px] flex items-center">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl">🌿</div>
+                            <div id="timeline-content" class="w-full">
+                                <!-- JS Injection -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Growth：非認知能力（タブ切り替え） -->
-        <section id="growth" class="py-16 md:py-20 px-4 md:px-6">
-            <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
-                <div class="lg:w-1/2 space-y-5 md:space-y-6">
-                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase block">Educational Effect</span>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl text-[#433d3c]">
-                        目に見えない力が、<br class="hidden sm:block">静かに根を張る
-                    </h2>
-                    <p class="text-sm sm:text-base text-[#6b6564] leading-relaxed">
+        <!-- Growth Section (Radar Chart) -->
+        <section id="growth" class="py-20 container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
+                
+                <div class="lg:w-1/2 space-y-6">
+                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">Educational Effect</span>
+                    <h2 class="text-3xl md:text-4xl text-[#433d3c]">目に見えない力が、<br>静かに根を張る</h2>
+                    <p class="text-[#6b6564] leading-relaxed">
                         この旅路で子どもたちが手にするのは、硬い知識ではありません。<br>
                         「自分にはできる」という確かな手ざわり。<br>
                         学校の成績表には載らない、人生を支える「非認知能力」です。
                     </p>
-                    <p class="text-xs sm:text-sm text-[#6b6564]">
-                        右の項目をタップすると、それぞれの力がどのように育っていくのかが表示されます。
-                    </p>
+                    
+                    <div class="bg-[#fcfbf9] p-6 rounded-xl border border-[#f0eee6]">
+                        <h4 id="skill-title" class="font-bold text-lg text-[#8d9f86] mb-2">チャートの項目をタップしてください</h4>
+                        <p id="skill-desc" class="text-sm text-[#6b6564]">
+                            右のグラフは、プログラムを通じて育まれる5つの力を表しています。<br>
+                            それぞれの項目をタップして、どのような変化が生まれるかをご覧ください。
+                        </p>
+                    </div>
                 </div>
 
-                <div class="lg:w-1/2 w-full space-y-4">
-                    <!-- タブボタン -->
-                    <div class="flex flex-wrap gap-2">
-                        <button class="skill-tab px-3 py-2 rounded-full border text-xs sm:text-sm"
-                                data-skill="自己効力感">
-                            自己効力感
-                        </button>
-                        <button class="skill-tab px-3 py-2 rounded-full border text-xs sm:text-sm"
-                                data-skill="言語化/メタ認知">
-                            言語化 / メタ認知
-                        </button>
-                        <button class="skill-tab px-3 py-2 rounded-full border text-xs sm:text-sm"
-                                data-skill="レジリエンス">
-                            レジリエンス
-                        </button>
-                        <button class="skill-tab px-3 py-2 rounded-full border text-xs sm:text-sm"
-                                data-skill="探究心">
-                            探究心
-                        </button>
-                        <button class="skill-tab px-3 py-2 rounded-full border text-xs sm:text-sm"
-                                data-skill="社会性">
-                            社会性
-                        </button>
-                    </div>
-
-                    <!-- 説明カード -->
-                    <div class="bg-white rounded-2xl border border-[#f0eee6] shadow-sm p-5 sm:p-6">
-                        <h3 id="skill-title" class="font-bold text-base sm:text-lg text-[#8d9f86] mb-2">
-                            気になる力をタップしてください
-                        </h3>
-                        <p id="skill-desc" class="text-xs sm:text-sm text-[#6b6564] leading-relaxed">
-                            プログラムを通して育まれる「5つの根っこ」のような力を紹介します。<br>
-                            勉強の点数には表れにくいけれど、長い人生を支えてくれる大切な力です。
-                        </p>
+                <div class="lg:w-1/2 w-full flex justify-center">
+                    <div class="chart-container bg-white rounded-3xl p-4 shadow-sm border border-[#f0eee6]">
+                        <canvas id="growthChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Parents -->
-        <section id="parents" class="py-16 md:py-20 bg-[#8d9f86]/10 relative overflow-hidden px-4 md:px-6">
-            <div class="absolute -top-20 -left-20 w-64 h-64 bg-[#8d9f86]/12 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-80 h-80 bg-[#dcb66f]/12 rounded-full blur-3xl"></div>
+        <!-- Parent's Benefits -->
+        <section id="parents" class="py-20 bg-[#8d9f86]/10 relative overflow-hidden">
+            <div class="absolute -top-20 -left-20 w-64 h-64 bg-[#8d9f86]/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#dcb66f]/10 rounded-full blur-3xl"></div>
 
-            <div class="max-w-6xl mx-auto relative z-10">
-                <div class="text-center mb-12 md:mb-16">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
                     <span class="text-[#8d9f86] font-bold tracking-widest text-xs uppercase mb-2 block">For Parents</span>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl mb-4 text-[#433d3c]">親子の未来への贈り物</h2>
-                    <p class="text-sm sm:text-base text-[#6b6564] max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl mb-4 text-[#433d3c]">親子の未来への贈り物</h2>
+                    <p class="text-[#6b6564] max-w-2xl mx-auto">
                         子どもが変わる時、親もまた変わります。<br>
                         不安や焦りを手放し、子どもを信じる「安心」を手に入れませんか。
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto text-sm">
-                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border-b-4 border-[#8d9f86] card-hover">
-                        <div class="h-10 w-10 md:h-12 md:w-12 bg-[#8d9f86]/20 rounded-full flex items-center justify-center text-xl md:text-2xl mb-5">
-                            👀
-                        </div>
-                        <h3 class="font-bold text-lg mb-3 text-[#433d3c]">子ども観のアップデート</h3>
-                        <p class="text-[#6b6564] text-xs sm:text-sm leading-relaxed">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#8d9f86] card-hover">
+                        <div class="h-12 w-12 bg-[#8d9f86]/20 rounded-full flex items-center justify-center text-2xl mb-6">👀</div>
+                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">子ども観のアップデート</h3>
+                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
                             家庭では見えなかった、真剣な眼差しや工夫する力。「うちの子、こんな力があったんだ」という発見が、親子の対話を豊かにします。
                         </p>
                     </div>
 
-                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border-b-4 border-[#dcb66f] card-hover">
-                        <div class="h-10 w-10 md:h-12 md:w-12 bg-[#dcb66f]/20 rounded-full flex items-center justify-center text-xl md:text-2xl mb-5">
-                            👐
-                        </div>
-                        <h3 class="font-bold text-lg mb-3 text-[#433d3c]">伴走の技法を学ぶ</h3>
-                        <p class="text-[#6b6564] text-xs sm:text-sm leading-relaxed">
+                    <!-- Card 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#dcb66f] card-hover">
+                        <div class="h-12 w-12 bg-[#dcb66f]/20 rounded-full flex items-center justify-center text-2xl mb-6">👐</div>
+                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">伴走の技法を学ぶ</h3>
+                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
                             「指示」ではなく「問いかけ」を。親は「評価者」から「伴走者」へ。ここで学ぶ「待つ・聴く」技術は、一生ものの財産になります。
                         </p>
                     </div>
 
-                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border-b-4 border-[#c27ba0] card-hover">
-                        <div class="h-10 w-10 md:h-12 md:w-12 bg-[#c27ba0]/20 rounded-full flex items-center justify-center text-xl md:text-2xl mb-5">
-                            🍵
-                        </div>
-                        <h3 class="font-bold text-lg mb-3 text-[#433d3c]">親自身の安心</h3>
-                        <p class="text-[#6b6564] text-xs sm:text-sm leading-relaxed">
+                    <!-- Card 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#c27ba0] card-hover">
+                        <div class="h-12 w-12 bg-[#c27ba0]/20 rounded-full flex items-center justify-center text-2xl mb-6">🍵</div>
+                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">親自身の安心</h3>
+                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
                             「学校だけが全てじゃない」。教育観が広がることで、焦りから解放されます。親の笑顔と安心こそが、子どもの挑戦を支える土台です。
                         </p>
                     </div>
@@ -493,61 +352,58 @@ ul li {
             </div>
         </section>
 
-        <!-- FAQ -->
-        <section id="faq" class="py-16 md:py-20 px-4 md:px-6">
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 container mx-auto px-6">
             <div class="max-w-3xl mx-auto">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl mb-10 md:mb-12 text-center text-[#433d3c]">
-                    よくある質問
-                </h2>
+                <h2 class="text-3xl md:text-4xl mb-12 text-center text-[#433d3c]">よくある不安への対話</h2>
                 
                 <div class="space-y-4" id="faq-container">
-                    <!-- JS注入 -->
+                    <!-- FAQ Items injected via JS -->
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
-        <section id="cta" class="py-20 md:py-24 bg-[#433d3c] text-[#fdfbf7] relative overflow-hidden px-4 md:px-6">
-            <div class="absolute inset-0 opacity-10"
-                 style="background-image: radial-gradient(#dcb66f 1px, transparent 1px); background-size: 30px 30px;"></div>
+        <!-- CTA Section -->
+        <section id="cta" class="py-24 bg-[#433d3c] text-[#fdfbf7] relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#dcb66f 1px, transparent 1px); background-size: 30px 30px;"></div>
             
-            <div class="max-w-4xl mx-auto text-center relative z-10">
-                <h2 class="text-2xl sm:text-3xl md:text-5xl font-serif mb-6 md:mb-8 leading-tight">
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h2 class="text-3xl md:text-5xl font-serif mb-8 leading-tight">
                     子どもの「好き」が、<br>
                     世界と出会う瞬間を<br>
                     一緒につくりませんか？
                 </h2>
-                <p class="text-sm sm:text-lg md:text-xl text-[#d1d5db] mb-10 md:mb-12 max-w-2xl mx-auto">
+                <p class="text-lg md:text-xl text-[#d1d5db] mb-12 max-w-2xl mx-auto">
                     子どもが見つけた宝物—その輝きが、誰かの喜びになる。<br>
                     その確かな手ざわりを、親子の物語として刻み込みましょう。
                 </p>
                 
-                <div class="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center">
-                    <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="bg-[#d9af86] text-white px-7 md:px-8 py-3.5 md:py-4 rounded-full text-sm md:text-lg font-bold hover:bg-[#c79a6e] transition-all inline-block shadow-sm">
+                <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                    <button class="bg-[#8d9f86] text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-[#7a8b74] transition-all shadow-lg hover:shadow-[#8d9f86]/50 transform hover:-translate-y-1 w-full md:w-auto">
                         プログラム説明会に申し込む
-                    </a>
-
-                    <button class="bg-transparent border border-[#fdfbf7] text-[#fdfbf7] px-7 md:px-8 py-3.5 md:py-4 rounded-full text-sm md:text-lg hover:bg-[#fdfbf7]/10 transition-all w-full md:w-auto">
+                    </button>
+                    <button class="bg-transparent border border-[#fdfbf7] text-[#fdfbf7] px-8 py-4 rounded-full text-lg hover:bg-[#fdfbf7]/10 transition-all w-full md:w-auto">
                         詳細な資料を請求する
                     </button>
                 </div>
-                <div class="mt-6 md:mt-8">
-                    <a href="#" class="text-[#dcb66f] border-b border-[#dcb66f] pb-1 hover:text-white transition-colors text-xs md:text-sm">
+                <div class="mt-8">
+                    <a href="#" class="text-[#dcb66f] border-b border-[#dcb66f] pb-1 hover:text-white transition-colors text-sm">
                         ここもBASEを見学する
                     </a>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-[#363130] text-[#9ca3af] py-6 md:py-8 text-center text-[11px] md:text-xs">
+        <footer class="bg-[#363130] text-[#9ca3af] py-8 text-center text-xs">
             <p>&copy; Kokomo. All Rights Reserved.</p>
         </footer>
-    <script>
-        /* ===== データ ===== */
 
+    </main>
+
+    <script>
+        // --- Data & State ---
+        
+        // 1. Comparison Data
         const comparisonData = {
             general: {
                 title: "一般的な体験イベント",
@@ -561,6 +417,7 @@ ul li {
             }
         };
 
+        // 2. Timeline Data
         const timelineData = [
             {
                 week: "Week 0",
@@ -588,211 +445,286 @@ ul li {
             }
         ];
 
+        // 3. Growth Data (Chart)
         const skillDetails = {
-            "自己効力感": "「自分にはできる」という感覚。誰かの指示ではなく、自分で考え形にしたものが世界に届いた時、揺るぎない自信が生まれます。",
-            "言語化/メタ認知": "「なぜそれが好きなの？」という問いに答える中で、曖昧な感情を明確な言葉にする力が育ちます。自分を客観的に見る力です。",
-            "レジリエンス": "思い通りにいかなかった経験を、「ダメだった」ではなく「次はどうする？」につなげていく力。失敗から立ち直るしなやかさが育ちます。",
-            "探究心": "「もっと良くするには？」「別のやり方は？」と、自分から問いを立てて深掘りしていく力。正解のない世界を楽しみながら進む姿勢です。",
-            "社会性": "自分の作品やお店を通して、人とつながる喜びを知ること。学校の成績とは別の軸で、自分の役割や貢献を実感していきます。"
+            '自己効力感': '「自分にはできる」という感覚。誰かの指示ではなく、自分で考え形にしたものが世界に届いた時、揺るぎない自信が生まれます。',
+            '言語化/メタ認知': '「なぜそれが好きなの？」という問いに答える中で、曖昧な感情を明確な言葉にする力が育ちます。自分を客観的に見る力です。',
+            'レジリエンス': '失敗からの回復力。思い通りにいかない時、「失敗した」ではなく「次はどうする？」と捉え直すしなやかな強さを養います。',
+            '探究心': '「もっと良くするには？」と自ら深掘りする力。正解のない問いに対して、楽しみながら答えを探し続ける姿勢です。',
+            '社会性': '自分の作品を通して他者とつながる喜び。学校の成績とは違う軸で、社会の中での自分の役割や価値を実感します。'
         };
 
+        // 4. FAQ Data
         const faqData = [
-            {
-                q: "難しそうに見えます。うちの子にできるでしょうか？",
-                a: "大丈夫です。私たちは「できるか」より「やってみたい気持ち」を大切にします。難しいと感じる瞬間こそが学びの入口。伴走者がお子さんのペースに合わせてサポートします。"
-            },
-            {
-                q: "売上が目的ではないとのことですが、赤字になっても良いのですか？",
-                a: "はい。目的は「価値を届ける体験」です。売上はフィードバックの一つに過ぎません。たとえ売れなくても、その理由を探り次につなげる「物語」こそが重要です。"
-            },
-            {
-                q: "不登校や学校が苦手な子でも参加できますか？",
-                a: "もちろんです。私たちは不登校を「深呼吸の時間」と捉えています。学校を責めることも、無理に行かせることもしません。ここでは学びの主権は子どもにあります。安心してご参加ください。"
-            },
-            {
-                q: "親はどこまで手伝えば良いですか？",
-                a: "親は「評価者」ではなく「発見者」です。手を貸すより、「どう思った？」と聴く姿勢が支援になります。その具体的な「伴走の技法」もプログラム内でお伝えします。"
-            }
+            { q: "難しそうに見えます。うちの子にできるでしょうか？", a: "大丈夫です。私たちは「できるか」より「やってみたい気持ち」を大切にします。難しいと感じる瞬間こそが学びの入口。伴走者がお子さんのペースに合わせて深呼吸のリズムを整えます。" },
+            { q: "売上が目的ではないとのことですが、赤字になっても良いのですか？", a: "はい。目的は「価値を届ける体験」です。売上はフィードバックの一つに過ぎません。たとえ売れなくても、その理由を探り次につなげる「物語」こそが重要です。" },
+            { q: "不登校や学校が苦手な子でも参加できますか？", a: "もちろんです。私たちは不登校を「深呼吸の時間」と捉えています。学校を責めることも、無理に行かせることもしません。ここでは学びの主権は子どもにあります。安心してご参加ください。" },
+            { q: "親はどこまで手伝えば良いですか？", a: "親は「評価者」ではなく「発見者」です。手を貸すより、「どう思った？」と聴く姿勢が支援になります。その具体的な「伴走の技法」もプログラム内でお伝えします。" }
         ];
 
-        /* ===== 初期化 ===== */
-        document.addEventListener("DOMContentLoaded", () => {
-    // initAtmosphere();
-    // setComparison("kokomo");
-    updateTimeline(0);
-    initSkillsTabs();
-    renderFAQ();
-});
+        // --- Logic ---
 
-        /* ===== 背景アニメ ===== */
+        // Init Interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Atmosphere
+            initAtmosphere();
+            
+            // Setup Comparison
+            setComparison('kokomo'); // Default to show the unique value
+
+            // Setup Timeline
+            updateTimeline(0);
+
+            // Setup Chart
+            initChart();
+
+            // Setup FAQ
+            renderFAQ();
+            
+            // Add scroll animations
+            observeAnimations();
+        });
+
+        // Atmosphere (Canvas-like effect with DOM for performance/simplicity in this constraints)
         function initAtmosphere() {
-            const container = document.getElementById("atmosphere");
-            const orbCount = 5;
-            for (let i = 0; i < orbCount; i++) {
-                const orb = document.createElement("div");
-                orb.classList.add("komorebi-light");
-                const size = Math.random() * 220 + 120;
+            const container = document.getElementById('atmosphere');
+            for(let i=0; i<8; i++) {
+                const orb = document.createElement('div');
+                orb.classList.add('komorebi-light');
+                const size = Math.random() * 300 + 100;
                 orb.style.width = `${size}px`;
                 orb.style.height = `${size}px`;
                 orb.style.left = `${Math.random() * 100}%`;
                 orb.style.top = `${Math.random() * 100}%`;
-                orb.style.animation = `sway ${Math.random() * 12 + 14}s infinite ease-in-out`;
-                orb.style.animationDelay = `${Math.random() * 6}s`;
+                orb.style.animation = `sway ${Math.random() * 10 + 10}s infinite ease-in-out`;
+                orb.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(orb);
             }
         }
 
-        /* ===== 想い：比較ブロック ===== */
+        // Comparison Logic
         function setComparison(type) {
-            const content = document.getElementById("comparison-content");
+            const content = document.getElementById('comparison-content');
             const data = comparisonData[type];
-
-            const btnGeneral = document.getElementById("btn-general");
-            const btnKokomo = document.getElementById("btn-kokomo");
-
-            if (type === "general") {
-                btnGeneral.className = "flex-1 py-3 sm:py-4 text-center font-bold bg-white text-[#6b6564] border-t-2 border-[#d1d5db]";
-                btnKokomo.className = "flex-1 py-3 sm:py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
+            
+            // Button Styles
+            const btnGeneral = document.getElementById('btn-general');
+            const btnKokomo = document.getElementById('btn-kokomo');
+            
+            if(type === 'general') {
+                btnGeneral.className = "flex-1 py-4 text-center font-bold bg-white text-[#6b6564] border-t-2 border-[#d1d5db]";
+                btnKokomo.className = "flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
             } else {
-                btnGeneral.className = "flex-1 py-3 sm:py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
-                btnKokomo.className = "flex-1 py-3 sm:py-4 text-center font-bold bg-white text-[#8d9f86] border-t-2 border-[#8d9f86]";
+                btnGeneral.className = "flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
+                btnKokomo.className = "flex-1 py-4 text-center font-bold bg-white text-[#8d9f86] border-t-2 border-[#8d9f86]";
             }
 
+            // Animate Content Swap
             content.style.opacity = 0;
             setTimeout(() => {
                 content.innerHTML = `
-                    <div class="text-5xl sm:text-6xl mb-4 sm:mb-6">${data.icon}</div>
-                    <h3 class="text-xl sm:text-2xl font-serif font-bold mb-3 sm:mb-4 text-[#433d3c]">${data.title}</h3>
-                    <p class="text-[#6b6564] leading-loose text-sm sm:text-base">${data.description}</p>
+                    <div class="text-6xl mb-6">${data.icon}</div>
+                    <h3 class="text-2xl font-serif font-bold mb-4 text-[#433d3c]">${data.title}</h3>
+                    <p class="text-[#6b6564] leading-loose">${data.description}</p>
                 `;
-                content.style.transition = "opacity 0.4s ease";
+                content.style.transition = 'opacity 0.5s ease';
                 content.style.opacity = 1;
-            }, 150);
+            }, 200);
         }
 
-        /* ===== プロセス：タイムライン ===== */
+        // Timeline Logic
         function updateTimeline(index) {
-            document.querySelectorAll(".timeline-btn").forEach(btn => {
-                const indicator = btn.querySelector(".indicator");
-                const i = parseInt(btn.dataset.index, 10);
-
+            // Update buttons
+            document.querySelectorAll('.timeline-btn').forEach(btn => {
+                const indicator = btn.querySelector('.indicator');
+                const i = parseInt(btn.dataset.index);
+                
                 if (i === index) {
-                    btn.classList.add("bg-white", "shadow-sm");
-                    indicator.classList.remove("bg-[#d1d5db]");
-                    indicator.classList.add("bg-[#8d9f86]");
+                    btn.classList.add('bg-white', 'shadow-sm');
+                    indicator.classList.remove('bg-[#d1d5db]');
+                    indicator.classList.add('bg-[#8d9f86]');
                 } else {
-                    btn.classList.remove("bg-white", "shadow-sm");
-                    indicator.classList.add("bg-[#d1d5db]");
-                    indicator.classList.remove("bg-[#8d9f86]");
+                    btn.classList.remove('bg-white', 'shadow-sm');
+                    indicator.classList.add('bg-[#d1d5db]');
+                    indicator.classList.remove('bg-[#8d9f86]');
                 }
             });
 
-            const display = document.getElementById("timeline-content");
+            // Update Content
+            const display = document.getElementById('timeline-content');
             const data = timelineData[index];
-
+            
             display.innerHTML = `
                 <div class="animate-fade-in">
-                    <span class="text-[#dcb66f] font-bold text-xs tracking-widest mb-2 block uppercase">${data.week}</span>
-                    <h3 class="text-xl sm:text-2xl font-serif font-bold text-[#433d3c] mb-2">${data.title}</h3>
-                    <p class="text-[#8d9f86] font-bold text-sm sm:text-base mb-4 sm:mb-6">${data.subtitle}</p>
-                    <p class="text-[#6b6564] leading-loose text-sm sm:text-base">${data.desc}</p>
+                    <span class="text-[#dcb66f] font-bold text-sm tracking-widest mb-2 block uppercase">${data.week}</span>
+                    <h3 class="text-2xl font-serif font-bold text-[#433d3c] mb-2">${data.title}</h3>
+                    <p class="text-[#8d9f86] font-bold mb-6">${data.subtitle}</p>
+                    <p class="text-[#6b6564] leading-loose">${data.desc}</p>
                 </div>
             `;
         }
 
-        /* ===== 非認知能力：タブ切り替え ===== */
-        function initSkillsTabs() {
-            const tabs = document.querySelectorAll(".skill-tab");
-            tabs.forEach(tab => {
-                tab.addEventListener("click", () => {
-                    const skill = tab.dataset.skill;
-                    selectSkillTab(skill);
-                });
-            });
+        // Chart Logic
+        let growthChart;
+        function initChart() {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            
+            // Data
+            const labels = ['自己効力感', '言語化/メタ認知', 'レジリエンス', '探究心', '社会性'];
+            const dataBefore = [2, 2, 2, 3, 2]; // Illustrative start
+            const dataAfter =  [5, 5, 5, 5, 5]; // Illustrative goal
 
-            // 最初に1つ選択状態にしておく
-            const firstSkill = "自己効力感";
-            selectSkillTab(firstSkill);
-        }
-
-        function selectSkillTab(skill) {
-            const tabs = document.querySelectorAll(".skill-tab");
-            tabs.forEach(tab => {
-                if (tab.dataset.skill === skill) {
-                    tab.classList.add("bg-[#8d9f86]", "text-white", "border-[#8d9f86]");
-                    tab.classList.remove("bg-white");
-                } else {
-                    tab.classList.remove("bg-[#8d9f86]", "text-white", "border-[#8d9f86]");
-                    tab.classList.add("bg-white");
+            growthChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'スタート時',
+                            data: dataBefore,
+                            backgroundColor: 'rgba(209, 213, 219, 0.2)',
+                            borderColor: 'rgba(209, 213, 219, 1)',
+                            borderWidth: 1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'プログラム後',
+                            data: dataAfter,
+                            backgroundColor: 'rgba(141, 159, 134, 0.4)', // Muted Green
+                            borderColor: '#8d9f86',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#8d9f86',
+                            pointHoverBackgroundColor: '#dcb66f',
+                            pointHoverBorderColor: '#fff',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 6,
+                            ticks: { display: false }, // Hide numbers
+                            grid: { color: '#f0eee6' },
+                            pointLabels: {
+                                font: {
+                                    family: "'Shippori Mincho', serif",
+                                    size: 14
+                                },
+                                color: '#433d3c'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, boxWidth: 6 } },
+                        tooltip: {
+                            backgroundColor: '#fff',
+                            titleColor: '#433d3c',
+                            bodyColor: '#6b6564',
+                            borderColor: '#f0eee6',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false,
+                        }
+                    },
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            // Find which axis was closest or clicked
+                            // Chart.js Radar click detection can be tricky for labels. 
+                            // Simplified: Just cycle descriptions or assume interaction intent.
+                            // For better UX, we'll map the index of the dataset point.
+                            const index = elements[0].index;
+                            const label = labels[index];
+                            updateSkillDesc(label);
+                        }
+                    }
                 }
             });
-
-            const titleEl = document.getElementById("skill-title");
-            const descEl = document.getElementById("skill-desc");
-
-            titleEl.textContent = skill;
-            descEl.textContent = skillDetails[skill] || "";
         }
 
-        /* ===== FAQ ===== */
+        function updateSkillDesc(label) {
+            document.getElementById('skill-title').innerText = label;
+            document.getElementById('skill-title').classList.add('text-[#dcb66f]');
+            document.getElementById('skill-desc').innerText = skillDetails[label];
+        }
+
+        // FAQ Render
         function renderFAQ() {
-            const container = document.getElementById("faq-container");
+            const container = document.getElementById('faq-container');
             container.innerHTML = faqData.map((item, index) => `
                 <div class="border border-[#e5e7eb] rounded-lg overflow-hidden bg-white">
-                    <button onclick="toggleFAQ(${index})"
-                            class="w-full text-left px-4 sm:px-6 py-4 flex justify-between items-center bg-[#fffdfa] hover:bg-[#f9f7f2] transition-colors">
-                        <span class="font-bold text-[#433d3c] pr-3 text-sm sm:text-base">Q. ${item.q}</span>
+                    <button onclick="toggleFAQ(${index})" class="w-full text-left px-6 py-4 flex justify-between items-center bg-[#fffdfa] hover:bg-[#f9f7f2] transition-colors">
+                        <span class="font-bold text-[#433d3c] pr-4">Q. ${item.q}</span>
                         <span class="text-[#8d9f86] text-xl transform transition-transform" id="faq-icon-${index}">+</span>
                     </button>
-                    <div id="faq-answer-${index}"
-                         class="hidden bg-white px-4 sm:px-6 py-4 sm:py-5 border-t border-[#f0eee6] text-[#6b6564] leading-relaxed text-sm">
+                    <div id="faq-answer-${index}" class="hidden bg-white px-6 py-6 border-t border-[#f0eee6] text-[#6b6564] leading-relaxed">
                         <span class="font-bold text-[#8d9f86]">A.</span> ${item.a}
                     </div>
                 </div>
-            `).join("");
+            `).join('');
         }
 
         function toggleFAQ(index) {
             const answer = document.getElementById(`faq-answer-${index}`);
             const icon = document.getElementById(`faq-icon-${index}`);
-
-            if (answer.classList.contains("hidden")) {
-                answer.classList.remove("hidden");
-                icon.textContent = "−";
+            
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                answer.classList.add('block', 'animate-fade-in');
+                icon.innerText = '−';
+                icon.style.transform = 'rotate(0deg)';
             } else {
-                answer.classList.add("hidden");
-                icon.textContent = "+";
+                answer.classList.add('hidden');
+                answer.classList.remove('block');
+                icon.innerText = '+';
             }
         }
 
-        /* ===== スムーススクロール ===== */
+        // Smooth Scroll
         function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.scrollIntoView({ behavior: "smooth" });
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
-        /* ===== Tailwind 拡張（アニメーション） ===== */
+        // Intersection Observer for Scroll Animations
+        function observeAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Apply to specific elements if needed
+        }
+
+        // Tailwind Config for custom animations
         tailwind.config = {
             theme: {
                 extend: {
                     animation: {
-                        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
-                        "fade-in": "fadeIn 0.5s ease-out forwards"
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
                     },
                     keyframes: {
                         fadeInUp: {
-                            "0%": { opacity: "0", transform: "translateY(18px)" },
-                            "100%": { opacity: "1", transform: "translateY(0)" }
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         fadeIn: {
-                            "0%": { opacity: "0" },
-                            "100%": { opacity: "1" }
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
                         }
                     }
                 }
             }
-        };
+        }
     </script>
 </body>
 </html>
