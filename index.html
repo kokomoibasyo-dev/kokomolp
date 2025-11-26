@@ -68,39 +68,46 @@
     <div id="atmosphere" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
     <!-- ナビゲーション -->
-    <nav class="fixed top-0 w-full z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-[#e5e7eb]/50">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
-            <div class="text-lg md:text-xl font-bold tracking-widest text-[#433d3c] serif">
+<nav class="fixed top-0 w-full z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-[#e5e7eb]/50">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+
+        <!-- 左：ロゴ -->
+        <a href="#" class="flex items-center gap-2">
+            <img src="https://raw.githubusercontent.com/kokomoibasyo-dev/kokomolp/main/logo.png"
+                 alt="ここもロゴ"
+                 class="w-9 h-9 md:w-11 md:h-11 rounded-full shadow-sm" />
+            <span class="text-lg md:text-xl font-bold tracking-widest text-[#433d3c] serif">
                 ここも
-            </div>
+            </span>
+        </a>
 
-            <!-- PCメニュー -->
-            <div class="hidden md:flex items-center space-x-6 text-sm tracking-wide text-[#6b6564]">
-                <button onclick="scrollToSection('philosophy')" class="hover:text-[#8d9f86] transition-colors">想い</button>
-                <button onclick="scrollToSection('process')" class="hover:text-[#8d9f86] transition-colors">育つプロセス</button>
-                <button onclick="scrollToSection('growth')" class="hover:text-[#8d9f86] transition-colors">学びと変化</button>
-                <button onclick="scrollToSection('parents')" class="hover:text-[#8d9f86] transition-colors">親御さんへ</button>
-                <button onclick="scrollToSection('faq')" class="hover:text-[#8d9f86] transition-colors">Q&A</button>
+        <!-- PCメニュー -->
+        <div class="hidden md:flex items-center space-x-6 text-sm tracking-wide text-[#6b6564]">
+            <button onclick="scrollToSection('philosophy')" class="hover:text-[#8d9f86] transition-colors">想い</button>
+            <button onclick="scrollToSection('process')" class="hover:text-[#8d9f86] transition-colors">育つプロセス</button>
+            <button onclick="scrollToSection('growth')" class="hover:text-[#8d9f86] transition-colors">学びと変化</button>
+            <button onclick="scrollToSection('parents')" class="hover:text-[#8d9f86] transition-colors">親御さんへ</button>
+            <button onclick="scrollToSection('faq')" class="hover:text-[#8d9f86] transition-colors">Q&A</button>
 
-                <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="bg-[#8d9f86] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
-                    説明会へ
-                </a>
-            </div>
-
-            <!-- スマホボタン（右上） -->
-            <div class="md:hidden">
-                <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="bg-[#8d9f86] text-white px-4 py-2 rounded-full text-xs hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
-                    説明会へ
-                </a>
-            </div>
+            <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="bg-[#8d9f86] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
+                説明会へ
+            </a>
         </div>
-    </nav>
+
+        <!-- スマホ右上のボタン -->
+        <div class="md:hidden">
+            <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="bg-[#8d9f86] text-white px-4 py-2 rounded-full text-xs hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
+                説明会へ
+            </a>
+        </div>
+    </div>
+</nav>
 
     <!-- Main -->
     <main class="relative z-10 pt-20 md:pt-24">
