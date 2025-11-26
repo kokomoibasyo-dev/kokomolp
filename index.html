@@ -24,6 +24,69 @@
         body {
             font-family: 'Noto Sans JP', sans-serif;
         }
+        /* =======================
+   スマホ最適化（B改善）
+   ======================= */
+@media (max-width: 640px) {
+
+    /* 基本文字サイズアップ */
+    body {
+        font-size: 1.05rem; /* 少し大きく */
+        line-height: 1.75;
+    }
+
+    h1 {
+        font-size: 1.9rem !important;
+        line-height: 1.4;
+    }
+
+    h2 {
+        font-size: 1.4rem !important;
+    }
+
+    p {
+        font-size: 1.05rem;
+    }
+
+    /* ボタン */
+    .btn-primary,
+    a.btn-primary,
+    button.btn-primary {
+        padding: 0.9rem 1.4rem;
+        font-size: 1.05rem;
+        border-radius: 0.9rem;
+    }
+
+    /* セクションの左右余白を増やす */
+    section {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
+
+    /* カードの余白増 */
+    .card {
+        padding: 1.4rem !important;
+        border-radius: 0.8rem !important;
+    }
+
+    /* FAQ アコーディオンの文字 */
+    .faq-title {
+        font-size: 1.1rem;
+    }
+
+    /* 見出し装飾（優しく） */
+    .section-title {
+        font-size: 1.4rem;
+        letter-spacing: 0.03em;
+    }
+
+    /* 上下スペースを少し広めに */
+    .section {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+}
+
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
