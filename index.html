@@ -2,64 +2,28 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ここも - 子どもの「やってみたい」を育てる場所</title>
 
-    <title>子どもガチ店長プログラム | ここも</title>
+    <!-- SEO -->
+    <meta name="description" content="不登校支援の新しい形。子どもが安心して過ごしながら、自分のペースで学びと興味を育てる場所『ここも』のマイクロ起業体験プログラム。" />
+    <meta property="og:title" content="ここも - 子どもの『やってみたい』を育てる場所" />
+    <meta property="og:description" content="不登校支援の新しい形。子どもが安心して過ごしながら、自分のペースで学びと興味を育てる場所『ここも』。" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/kokomoibasyo-dev/kokomolp/main/logo.png" />
+    <meta property="og:type" content="website" />
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 日本語フォント最適化（2つ → 1つへ軽量化） -->
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <!-- フォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Base Style -->
     <style>
         body {
-            font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: #fdfbf7;
-            color: #433d3c;
-            line-height: 1.8;
+            font-family: 'Noto Sans JP', sans-serif;
         }
-
-        h1, h2, h3, .serif {
-            font-family: 'Zen Maru Gothic', serif;
-        }
-
-        /* 文字サイズの最適化（スマホで読みやすく） */
-        html {
-            font-size: 15px;
-        }
-        @media (min-width: 640px) { html { font-size: 16px; }}
-        @media (min-width: 1024px) { html { font-size: 17px; }}
-
-        /* 光のゆらぎ（軽量化） */
-        @keyframes sway {
-            0%   { transform: translate(0,0); opacity: .25; }
-            50%  { transform: translate(8px,12px); opacity: .45; }
-            100% { transform: translate(0,0); opacity: .25; }
-        }
-        .komorebi-light {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,253,230,0.6) 0%, rgba(255,255,255,0) 70%);
-            filter: blur(16px);
-            pointer-events: none;
-        }
-
-        /* カードホバー */
-        .card-hover { transition: all .25s ease; }
-        .card-hover:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-        }
-
-        /* スクロールバー */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb {
-            background: #d4cbb8;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-track { background: #fdfbf7; }
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
