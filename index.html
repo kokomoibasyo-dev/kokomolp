@@ -87,6 +87,92 @@
     }
 }
 
+        /* =======================
+   C：視認性の微調整
+   ======================= */
+
+/* セクション間の余白を少し広めに */
+.section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+/* 見出しを優しく強調 */
+.section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #333;
+    margin-bottom: 1.8rem;
+}
+
+/* サブ見出しの柔らかい印象 */
+.section-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1.2rem;
+}
+
+/* 本文の行間を広げて読みやすく */
+p {
+    line-height: 1.85;
+    margin-bottom: 1.4rem;
+}
+
+/* カード（白い箱）の影をほんのり */
+.card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* 強調テキスト */
+.highlight {
+    background: #fff6d1;
+    padding: 0.2rem 0.35rem;
+    border-radius: 0.3rem;
+}
+
+/* リスト（箇条書き）の見やすさUP */
+ul li {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+}
+
+/* ボタンの影と柔らかさ */
+.button-primary {
+    border-radius: 9999px;
+    padding: 0.9rem 1.6rem;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* FAQの区切りを柔らかく */
+.faq-item {
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* スマホ用微調整 */
+@media (max-width: 640px) {
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.6rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .card {
+        border-radius: 0.8rem;
+        padding: 1.2rem;
+    }
+}
+
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
