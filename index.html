@@ -224,7 +224,82 @@ ul li {
     </div>
 </section>
         <!-- Philosophy -->
-<section id="philosophy" class="py-20 px-5 md:px-8 bg-[#fdfbf7]">
+<section id="philosophy"<!-- Comparison Section -->
+<section id="comparison" class="py-20 px-5 md:px-8 bg-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+      一般的な「起業体験」と<br class="md:hidden">ここもの「起業学習」の違い
+    </h2>
+    <p class="text-gray-700 mb-10 leading-relaxed">
+      ただ売るだけの体験ではなく、<br class="md:hidden">
+      「育つ力」を中心にした8〜10週間の伴走型プログラム。
+    </p>
+
+    <!-- Toggle Buttons -->
+    <div class="flex justify-center gap-4 mb-10">
+      <button id="btn-general"
+        class="px-5 py-2 rounded-full border text-gray-600 bg-gray-100 hover:bg-gray-200 transition">
+        一般的な起業体験
+      </button>
+      <button id="btn-kokomo"
+        class="px-5 py-2 rounded-full border border-[#d8a762] text-white bg-[#d8a762] hover:bg-[#c59755] transition">
+        ここもの起業学習
+      </button>
+    </div>
+
+    <!-- Comparison Content -->
+    <div id="comparison-content" class="text-left bg-[#faf7f2] p-6 rounded-2xl shadow">
+      <!-- Default view = Kokomo -->
+      <div id="kokomo-view">
+        <h3 class="text-xl font-bold mb-3 text-[#d59b52]">ここもの起業学習</h3>
+        <ul class="list-disc pl-5 space-y-3 text-gray-700">
+          <li>“好き”や“得意”を起点にした探究型プロセス</li>
+          <li>商品を作る前に「自分の種」を見つける時間がある</li>
+          <li>週ごとの伴走・内省ワークで非認知能力が育つ</li>
+          <li>売れる体験ではなく「自分で選ぶ・決める」経験</li>
+          <li>大人が評価しない。子ども自身が意味を見つける</li>
+        </ul>
+      </div>
+
+      <div id="general-view" class="hidden">
+        <h3 class="text-xl font-bold mb-3 text-gray-700">一般的な起業体験</h3>
+        <ul class="list-disc pl-5 space-y-3 text-gray-700">
+          <li>短期で商品づくりだけをゴールにすることが多い</li>
+          <li>「売れるかどうか」前提で考えさせがち</li>
+          <li>準備期間が短く、内省や言語化が不足しやすい</li>
+          <li>子どもの“好き”より作業が優先になりがち</li>
+          <li>達成感はあるが、学びの深まりは不安定</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const btnGeneral = document.getElementById("btn-general");
+    const btnKokomo = document.getElementById("btn-kokomo");
+    const generalView = document.getElementById("general-view");
+    const kokomoView = document.getElementById("kokomo-view");
+
+    btnGeneral.addEventListener("click", () => {
+      generalView.classList.remove("hidden");
+      kokomoView.classList.add("hidden");
+      btnGeneral.classList.add("bg-[#d8a762]", "text-white");
+      btnKokomo.classList.remove("bg-[#d8a762]", "text-white");
+      btnKokomo.classList.add("bg-gray-100", "text-gray-600");
+    });
+
+    btnKokomo.addEventListener("click", () => {
+      kokomoView.classList.remove("hidden");
+      generalView.classList.add("hidden");
+      btnKokomo.classList.add("bg-[#d8a762]", "text-white");
+      btnGeneral.classList.remove("bg-[#d8a762]", "text-white");
+      btnGeneral.classList.add("bg-gray-100", "text-gray-600");
+    });
+  </script>
+</section>
+ 
+    class="py-20 px-5 md:px-8 bg-[#fdfbf7]">
     <div class="max-w-4xl mx-auto text-center space-y-12">
 
         <!-- 小見出し -->
