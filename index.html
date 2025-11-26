@@ -113,32 +113,52 @@
     <main class="relative z-10 pt-20 md:pt-24">
 
         <!-- Hero -->
-        <section class="min-h-[80vh] flex items-center justify-center px-4 md:px-6">
-            <div class="max-w-3xl text-center space-y-8">
-                <p class="text-[#8d9f86] tracking-[0.18em] text-xs md:text-sm font-bold animate-fade-in-up">
-                    子どもガチ店長プログラム
-                </p>
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-medium text-[#433d3c] animate-fade-in-up" style="animation-delay:0.15s;">
-                    「やってみたい」が<br>
-                    <span class="inline-block mt-3">世界と出会う場所</span>
-                </h1>
-                <div class="w-16 h-1 bg-[#dcb66f] mx-auto rounded-full opacity-70 animate-fade-in-up" style="animation-delay:0.3s;"></div>
-                <p class="text-sm sm:text-base md:text-lg leading-relaxed md:leading-loose text-[#6b6564] max-w-2xl mx-auto animate-fade-in-up" style="animation-delay:0.45s;">
-                    子どもの後ろ姿は、いつも、なにかを探しています。<br>
-                    それは、大人には見えない、自分だけの小さな宝物。<br><br>
-                    私たち「ここも」が用意したのは、<br>
-                    その「やってみたい」という名の、小さな種を育むためのプログラムです。<br><br>
-                    急かさず、比べず、ただ静かに見守る。<br>
-                    子どもの「好き」を、100の言葉として、世界へと翻訳していくプロセス。
-                </p>
-                <div class="pt-4 animate-fade-in-up" style="animation-delay:0.6s;">
-                    <button onclick="scrollToSection('philosophy')" class="group flex flex-col items-center mx-auto text-[#8d9f86] text-xs sm:text-sm hover:text-[#6b6564] transition-colors">
-                        <span class="mb-1 sm:mb-2">物語をはじめる</span>
-                        <span class="text-2xl group-hover:translate-y-1 sm:group-hover:translate-y-2 transition-transform">↓</span>
-                    </button>
-                </div>
-            </div>
-        </section>
+<section id="hero" class="min-h-[82vh] flex items-center justify-center px-4 md:px-6 relative">
+    <div class="max-w-3xl text-center space-y-8 relative z-10">
+
+        <!-- プログラム名タグ -->
+        <p class="text-[#8d9f86] tracking-[0.18em] text-xs md:text-sm font-bold animate-fade-in-up">
+            子どもガチ店長プログラム
+        </p>
+
+        <!-- 大見出し -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-medium text-[#433d3c] animate-fade-in-up"
+            style="animation-delay:0.15s;">
+            「やってみたい」が  
+            <br class="sm:block hidden">
+            <span class="inline-block mt-2 sm:mt-3">世界と出会う場所</span>
+        </h1>
+
+        <!-- 下の線 -->
+        <div class="w-16 h-1 bg-[#dcb66f] mx-auto rounded-full opacity-70 animate-fade-in-up"
+             style="animation-delay:0.3s;"></div>
+
+        <!-- リード文 -->
+        <p class="text-[0.9rem] sm:text-base md:text-lg leading-relaxed md:leading-loose text-[#6b6564] max-w-2xl mx-auto animate-fade-in-up"
+           style="animation-delay:0.45s;">
+            子どもの後ろ姿は、いつも、なにかを探しています。  
+            それは、大人には見えない、自分だけの小さな宝物。  
+            <br><br class="hidden sm:block">
+            私たち「ここも」が用意したのは、  
+            “やってみたい” という名の小さな種を育むためのプログラムです。  
+            <br><br class="hidden sm:block">
+            急かさず、比べず、ただ静かに見守る。  
+            子どもの「好き」を、100のことばとして世界へ翻訳していく時間。
+        </p>
+
+        <!-- スクロールボタン -->
+        <div class="pt-4 animate-fade-in-up" style="animation-delay:0.6s;">
+            <button onclick="scrollToSection('philosophy')"
+                    class="group flex flex-col items-center mx-auto text-[#8d9f86] text-xs sm:text-sm hover:text-[#6b6564] transition-colors">
+                <span class="mb-1 sm:mb-2">物語をはじめる</span>
+                <span class="text-2xl group-hover:translate-y-1 sm:group-hover:translate-y-2 transition-transform">↓</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ほんのり暗いオーバーレイ（読みやすくするため） -->
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#fdfbf7]/60 pointer-events-none"></div>
+</section>
 
         <!-- Philosophy -->
         <section id="philosophy" class="py-16 md:py-24 px-4 md:px-6">
