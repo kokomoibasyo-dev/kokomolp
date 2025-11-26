@@ -27,112 +27,53 @@
     </style>
 </head>
 <body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
+<!-- ====== HERO SECTION ====== -->
+<section class="relative w-full overflow-hidden bg-[#f5f7f4]">
+    <!-- 軽量アニメ背景 -->
+    <div class="absolute inset-0 opacity-[0.12] pointer-events-none">
+        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="soft-waves" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+                    <path d="M0 100 Q50 0 100 100 T200 100" fill="none" stroke="#9bb0a3" stroke-width="3"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#soft-waves)"/>
+        </svg>
+    </div>
 
-    <!-- 背景アニメ -->
-    <div id="atmosphere" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
-
-    <!-- ナビゲーション -->
-<nav class="fixed top-0 w-full z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-[#e5e7eb]/50">
-    <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
-
-        <!-- 左：ロゴ -->
-        <a href="#" class="flex items-center gap-2">
+    <!-- ナビゲーション（ロゴ＋説明会ボタン） -->
+    <nav class="relative z-10 flex justify-between items-center px-6 pt-5 max-w-5xl mx-auto">
+        <div class="flex items-center gap-3">
             <img src="https://raw.githubusercontent.com/kokomoibasyo-dev/kokomolp/main/logo.png"
                  alt="ここもロゴ"
-                 class="w-9 h-9 md:w-11 md:h-11 rounded-full shadow-sm" />
-            <span class="text-lg md:text-xl font-bold tracking-widest text-[#433d3c] serif">
-                ここも
-            </span>
+                 class="w-10 h-10 rounded-full shadow">
+            <span class="text-[#4a5a4e] font-semibold text-lg">ここも - 子どものやってみたいを育てる場所</span>
+        </div>
+
+        <a href="https://forms.gle/L6DdjxX2MCfCsP8u5" target="_blank"
+           class="bg-[#8fae8b] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7c9a78] transition-colors shadow">
+           説明会へ
         </a>
+    </nav>
 
-        <!-- PCメニュー -->
-        <div class="hidden md:flex items-center space-x-6 text-sm tracking-wide text-[#6b6564]">
-            <button onclick="scrollToSection('philosophy')" class="hover:text-[#8d9f86] transition-colors">想い</button>
-            <button onclick="scrollToSection('process')" class="hover:text-[#8d9f86] transition-colors">育つプロセス</button>
-            <button onclick="scrollToSection('growth')" class="hover:text-[#8d9f86] transition-colors">学びと変化</button>
-            <button onclick="scrollToSection('parents')" class="hover:text-[#8d9f86] transition-colors">親御さんへ</button>
-            <button onclick="scrollToSection('faq')" class="hover:text-[#8d9f86] transition-colors">Q&A</button>
-
-            <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="bg-[#8d9f86] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
-                説明会へ
-            </a>
-        </div>
-
-        <!-- スマホ右上のボタン -->
-        <div class="md:hidden">
-            <a href="https://forms.gle/L6DdjxX2MCfCsP8u5"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="bg-[#8d9f86] text-white px-4 py-2 rounded-full text-xs hover:bg-[#7a8b74] transition-colors shadow-sm inline-flex items-center gap-1">
-                説明会へ
-            </a>
-        </div>
-    </div>
-</nav>
-
-    <!-- Main -->
-    <main class="relative z-10 pt-20 md:pt-24">
-
-        <!-- Hero -->
-<section id="hero" class="min-h-[82vh] flex items-center justify-center px-4 md:px-6 relative">
-    <div class="max-w-3xl text-center space-y-8 relative z-10">
-
-        <!-- プログラム名タグ -->
-        <p class="text-[#8d9f86] tracking-[0.18em] text-xs md:text-sm font-bold animate-fade-in-up">
-            子どもガチ店長プログラム
-        </p>
-
-        <!-- 大見出し -->
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight font-medium text-[#433d3c] animate-fade-in-up"
-            style="animation-delay:0.15s;">
-            「やってみたい」が  
-            <br class="sm:block hidden">
-            <span class="inline-block mt-2 sm:mt-3">世界と出会う場所</span>
+    <!-- メインヒーロー -->
+    <div class="relative z-10 max-w-4xl mx-auto text-center py-20 px-6">
+        <h1 class="text-3xl md:text-5xl font-bold text-[#3d4b40] leading-tight">
+            子どもの「やってみたい」は、<br class="md:hidden">未来の芽になる。
         </h1>
 
-        <!-- 下の線 -->
-        <div class="w-16 h-1 bg-[#dcb66f] mx-auto rounded-full opacity-70 animate-fade-in-up"
-             style="animation-delay:0.3s;"></div>
-
-        <!-- リード文 -->
-        <p class="text-[0.9rem] sm:text-base md:text-lg leading-relaxed md:leading-loose text-[#6b6564] max-w-2xl mx-auto animate-fade-in-up"
-           style="animation-delay:0.45s;">
-            子どもの後ろ姿は、いつも、なにかを探しています。 
-            <br><br class="hidden sm:block"> 
-            それは、大人には見えない、自分だけの小さな宝物。  
-            <br><br class="hidden sm:block">
-            <br><br class="hidden sm:block"> 
-            私たち「ここも」が用意したのは、
-            <br><br class="hidden sm:block">
-            “やってみたい” という名の小さな種を
-            <br><br class="hidden sm:block"> 
-            大切に育てるためのプログラムです。
-            <br><br class="hidden sm:block"> 
-            <br><br class="hidden sm:block">
-            急かさず、比べず、ただ静かに見守る。
-            <br><br class="hidden sm:block">
-            子どもの「好き」を、
-            <br><br class="hidden sm:block"> 
-            100のことばとして世界へ翻訳していく時間。
+        <p class="text-[#4a5a4e] mt-5 text-base md:text-lg leading-relaxed">
+            ここもは、不登校の子どもたち・学校に行きづらい子・ゆっくり育つ子どもたちのための、<br>
+            「安心できる第3の場所」です。  
+            子どもは育つ力をもっている。大人ができるのは、それを邪魔しないことだけ。
         </p>
 
-        <!-- スクロールボタン -->
-        <div class="pt-4 animate-fade-in-up" style="animation-delay:0.6s;">
-            <button onclick="scrollToSection('philosophy')"
-                    class="group flex flex-col items-center mx-auto text-[#8d9f86] text-xs sm:text-sm hover:text-[#6b6564] transition-colors">
-                <span class="mb-1 sm:mb-2">物語をはじめる</span>
-                <span class="text-2xl group-hover:translate-y-1 sm:group-hover:translate-y-2 transition-transform">↓</span>
-            </button>
-        </div>
+        <a href="#program" 
+           class="inline-block mt-8 bg-[#8fae8b] text-white px-8 py-3 rounded-full text-base hover:bg-[#7c9a78] transition-colors shadow-lg">
+            プログラムを見る
+        </a>
     </div>
-
-    <!-- ほんのり暗いオーバーレイ（読みやすくするため） -->
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#fdfbf7]/60 pointer-events-none"></div>
 </section>
-
         <!-- Philosophy -->
 <section id="philosophy" class="py-20 px-5 md:px-8 bg-[#fdfbf7]">
     <div class="max-w-4xl mx-auto text-center space-y-12">
