@@ -743,95 +743,28 @@
             `;
         }
 
-        // Chart Logic
-        let growthChart;
-        function initChart() {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            
-            // Data
-            const labels = ['自己効力感', '言語化/メタ認知', 'レジリエンス', '探究心', '社会性'];
-            const dataBefore = [2, 2, 2, 3, 2]; // Illustrative start
-            const dataAfter =  [5, 5, 5, 5, 5]; // Illustrative goal
-
-            growthChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'スタート時',
-                            data: dataBefore,
-                            backgroundColor: 'rgba(209, 213, 219, 0.2)',
-                            borderColor: 'rgba(209, 213, 219, 1)',
-                            borderWidth: 1,
-                            pointRadius: 0
-                        },
-                        {
-                            label: 'プログラム後',
-                            data: dataAfter,
-                            backgroundColor: 'rgba(141, 159, 134, 0.4)', // Muted Green
-                            borderColor: '#8d9f86',
-                            borderWidth: 2,
-                            pointBackgroundColor: '#fff',
-                            pointBorderColor: '#8d9f86',
-                            pointHoverBackgroundColor: '#dcb66f',
-                            pointHoverBorderColor: '#fff',
-                            pointRadius: 4,
-                            pointHoverRadius: 6
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            min: 0,
-                            max: 6,
-                            ticks: { display: false }, // Hide numbers
-                            grid: { color: '#f0eee6' },
-                            pointLabels: {
-                                font: {
-                                    family: "'Shippori Mincho', serif",
-                                    size: 14
-                                },
-                                color: '#433d3c'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, boxWidth: 6 } },
-                        tooltip: {
-                            backgroundColor: '#fff',
-                            titleColor: '#433d3c',
-                            bodyColor: '#6b6564',
-                            borderColor: '#f0eee6',
-                            borderWidth: 1,
-                            padding: 10,
-                            displayColors: false,
-                        }
-                    },
-                    onClick: (evt, elements) => {
-                        if (elements.length > 0) {
-                            // Find which axis was closest or clicked
-                            // Chart.js Radar click detection can be tricky for labels. 
-                            // Simplified: Just cycle descriptions or assume interaction intent.
-                            // For better UX, we'll map the index of the dataset point.
-                            const index = elements[0].index;
-                            const label = labels[index];
-                            updateSkillDesc(label);
-                        }
-                    }
-                }
-            });
-        }
+        // --- 追加する新しいアイコン操作ロジック ---
 
         function updateSkillDesc(label) {
+            // 1. アイコンのアクティブ状態をリセット
+            document.querySelectorAll('.skill-icon-btn').forEach(btn => {
+                btn.classList.remove('active-skill');
+            });
+            
+            // 2. クリックされたアイコンをアクティブに
+            // label と一致する data-skill 属性を持つボタンを探す
+            const activeBtn = document.querySelector(`.skill-icon-btn[data-skill="${label}"]`);
+            if(activeBtn) {
+                activeBtn.classList.add('active-skill');
+            }
+
+            // 3. タイトルと説明文を更新
             document.getElementById('skill-title').innerText = label;
             document.getElementById('skill-title').classList.add('text-[#dcb66f]');
             document.getElementById('skill-desc').innerText = skillDetails[label];
         }
 
+// --- ここまで追加 ---
         // FAQ Render
         function renderFAQ() {
             const container = document.getElementById('faq-container');
