@@ -300,12 +300,37 @@
                             右のグラフは、プログラムを通じて育まれる5つの力を表しています。<br>
                             それぞれの項目をタップして、どのような変化が生まれるかをご覧ください。
                         </p>
-                    </div>
+                   </div>
                 </div>
 
                 <div class="lg:w-1/2 w-full flex justify-center">
-                    <div class="chart-container bg-white rounded-3xl p-4 shadow-sm border border-[#f0eee6]">
-                        <canvas id="growthChart"></canvas>
+                    <div id="skill-icons-container" class="w-full max-w-md p-6 bg-white rounded-3xl shadow-lg border border-[#f0eee6] grid grid-cols-3 gap-4">
+                        
+                        <button onclick="updateSkillDesc('自己効力感')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20 active-skill" data-skill="自己効力感">
+                            <span class="text-3xl block mb-1">💪</span>
+                            <span class="text-xs font-bold text-[#433d3c]">自己効力感</span>
+                        </button>
+
+                        <button onclick="updateSkillDesc('言語化/メタ認知')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="言語化/メタ認知">
+                            <span class="text-3xl block mb-1">💡</span>
+                            <span class="text-xs font-bold text-[#433d3c]">言語化/メタ認知</span>
+                        </button>
+                        
+                        <button onclick="updateSkillDesc('レジリエンス')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="レジリエンス">
+                            <span class="text-3xl block mb-1">🌳</span>
+                            <span class="text-xs font-bold text-[#433d3c]">レジリエンス</span>
+                        </button>
+                        
+                        <button onclick="updateSkillDesc('探究心')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="探究心">
+                            <span class="text-3xl block mb-1">🔎</span>
+                            <span class="text-xs font-bold text-[#433d3c]">探究心</span>
+                        </button>
+                        
+                        <button onclick="updateSkillDesc('社会性')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="社会性">
+                            <span class="text-3xl block mb-1">🌍</span>
+                            <span class="text-xs font-bold text-[#433d3c]">社会性</span>
+                        </button>
+
                     </div>
                 </div>
             </div>
