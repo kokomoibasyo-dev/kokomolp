@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マイクロ起業体験プログラム子ども<br> | ここも - 心を育む起業体験</title>
+    <title>子どもガチ店長プログラム | ここも - 心を育む起業体験</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
@@ -24,726 +24,436 @@
             50% { transform: translate(10px, 15px) rotate(5deg); opacity: 0.5; }
             100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
         }
-        .komorebi-light {
+        .komorebi-effect {
             position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,253,230,0.6) 0%, rgba(255,255,255,0) 70%);
-            filter: blur(20px);
-            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             pointer-events: none;
         }
-
-        /* Chart Container Utilities */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #fdfbf7;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d4cbb8;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b8af9e;
-        }
-
-        /* Card Transitions */
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Timeline Connector */
-        .timeline-line {
+        .komorebi-particle {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            background-color: #e5e7eb;
-            height: 100%;
-            z-index: 0;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(220, 182, 111, 0.7) 0%, rgba(220, 182, 111, 0) 70%);
+            border-radius: 50%;
+            animation: sway 15s infinite alternate;
         }
-        @media (max-width: 768px) {
-            .timeline-line {
-                left: 1rem;
-            }
-        }
+
         /* Icon Button States */
         .skill-icon-btn.active-skill {
             background-color: #dcb66f; /* Soft Gold - Sunlight */
             color: #fff;
             box-shadow: 0 4px 10px rgba(220, 182, 111, 0.4);
         }
-        
+        /* 以前の絵文字用CSSは削除しました */
+
+        /* Animation Classes */
+        .animate-fade-in-up {
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
+        
     </style>
-    <!-- Chosen Palette: [Warm Neutral & Earth Tones] 
-         Background: #fdfbf7 (Soft Cream/Washi)
-         Text: #433d3c (Warm Charcoal)
-         Accent 1: #8d9f86 (Muted Matcha Green - Nature)
-         Accent 2: #dcb66f (Soft Gold - Sunlight)
-         Accent 3: #c27ba0 (Gentle Plum - Subtlety)
-    -->
-
-    <!-- Application Structure Plan: 
-         1. Hero: Immersive, poetic intro with a "Sunlight" canvas effect.
-         2. Philosophy (The Why): Text + Interactive Comparison (Typical vs Kokomo) to show the shift in perspective.
-         3. The Process (Timeline): An interactive vertical/horizontal stepper. Clicking stages reveals the "Story" of that phase.
-         4. Growth Visualizer (Radar Chart): Visualizing the "Invisible" educational effects. Users interact with the chart to understand abstract concepts like "Resilience".
-         5. For Parents: Flip/Expand cards to show the transformation of the parent's role.
-         6. FAQ: Accordion for easy access to reassurance.
-         7. CTA: Gentle but clear next steps.
-         Rationale: This structure moves from emotional connection (Hero) to logic/value (Philosophy/Timeline) to deep understanding (Growth/Parents), mirroring a parent's decision-making journey from "feeling" to "understanding".
-    -->
-
-    <!-- Visualization & Content Choices:
-         1. Radar Chart (Chart.js): 
-            - Goal: Visualize intangible skills (Self-efficacy, Resilience, etc.).
-            - Interaction: Click data points to see the definition.
-            - Justification: Shows that growth happens in all directions, not just "sales".
-         2. Interactive Timeline:
-            - Goal: Explain the 8-10 week process.
-            - Interaction: Selection highlights details.
-            - Justification: Breaks down a long commitment into manageable, story-driven steps.
-         3. Comparison Cards:
-            - Goal: Differentiate from other events.
-            - Interaction: Toggle view.
-            - Justification: Clarity on unique value proposition.
-         Confirming NO SVG, NO Mermaid. All visuals via CSS/Canvas/Tailwind.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body class="overflow-x-hidden antialiased selection:bg-[#dcb66f] selection:text-white">
-
-    <!-- Canvas Background for Atmosphere -->
-    <div id="atmosphere" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <!-- JS will populate random light orbs here -->
-    </div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-[#fdfbf7]/90 backdrop-blur-sm border-b border-[#e5e7eb]/50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold tracking-widest text-[#433d3c] serif">ここも</div>
-            <div class="hidden md:flex space-x-8 text-sm tracking-wide text-[#6b6564]">
-                <button onclick="scrollToSection('philosophy')" class="hover:text-[#8d9f86] transition-colors">想い</button>
-                <button onclick="scrollToSection('process')" class="hover:text-[#8d9f86] transition-colors">育つプロセス</button>
-                <button onclick="scrollToSection('growth')" class="hover:text-[#8d9f86] transition-colors">学びと変化</button>
-                <button onclick="scrollToSection('parents')" class="hover:text-[#8d9f86] transition-colors">親御さんへ</button>
-                <button onclick="scrollToSection('faq')" class="hover:text-[#8d9f86] transition-colors">Q&A</button>
-                <button onclick="scrollToSection('pricing')" class="hover:text-[#8d9f86] transition-colors">料金・コース</button>
-
-            </div>
-            <a href="https://forms.gle/DcQghGvfUzPrHwKG7" target="_blank"
-   class="bg-[#8d9f86] text-white px-5 py-2 rounded-full text-sm hover:bg-[#7a8b74] transition-colors shadow-sm">
-    申し込む
-</a>
+<body class="min-h-screen">
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="mx-auto max-w-7xl px-4 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-[#8d9f86] serif">ここも</div>
+            <nav class="space-x-4 hidden sm:block">
+                <a href="#philosophy-core" class="text-[#433d3c] hover:text-[#dcb66f] transition-colors">哲学</a>
+                <a href="#program-flow" class="text-[#433d3c] hover:text-[#dcb66f] transition-colors">全体像</a>
+                <a href="#growth" class="text-[#433d3c] hover:text-[#dcb66f] transition-colors">成長</a>
+                <a href="#testimonials" class="text-[#433d3c] hover:text-[#dcb66f] transition-colors">声</a>
+                <a href="#faq" class="text-[#433d3c] hover:text-[#dcb66f] transition-colors">FAQ</a>
+            </nav>
+            <a href="#cta" class="bg-[#dcb66f] text-white py-2 px-4 rounded-full font-bold text-sm hover:bg-[#8d9f86] transition-colors">無料説明会予約</a>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Wrapper -->
-    <main class="relative z-10 pt-20">
-
-        <!-- Hero Section -->
-        <section class="min-h-[85vh] flex items-center justify-center relative px-6">
-            <div class="max-w-3xl text-center space-y-8">
-                <p class="text-[#8d9f86] tracking-[0.2em] text-sm md:text-base font-bold animate-fade-in-up">マイクロ起業プログラム<br>
-                    “子どもガチ店長”</p>
-                <h1 class="text-3xl md:text-5xl lg:text-6xl leading-tight font-medium text-[#433d3c] animate-fade-in-up" style="animation-delay: 0.2s;">
-                    「やってみたい」が<br><span class="inline-block mt-4">社会と出会う場所</span>
-                </h1>
-                <div class="w-16 h-1 bg-[#dcb66f] mx-auto rounded-full opacity-60 animate-fade-in-up" style="animation-delay: 0.4s;"></div>
-                <p class="text-base md:text-lg leading-loose text-[#6b6564] max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.6s;">
-                    子どもの後ろ姿は、いつも、なにかを探しています。<br>
-                    それは、大人には見えない、自分だけの小さな宝物。<br>
-                    <br>
-                    「ここも」が用意したのは、<br>
-                    「やってみたい」という名の、小さな種を育てるプログラム。<br>
-                    <br>
-                    急かさず、比べず、ただ静かに見守る。<br>
-                    子どもの「好き」を<br>
-                    100の言葉として、世界へと翻訳していくプロセス。
+    <main>
+        <section id="hero" class="relative overflow-hidden py-16 md:py-24 text-center">
+            <div class="komorebi-effect">
+                <div class="komorebi-particle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+                <div class="komorebi-particle" style="top: 30%; left: 30%; animation-delay: 5s;"></div>
+                <div class="komorebi-particle" style="top: 50%; right: 15%; animation-delay: 10s;"></div>
+                <div class="komorebi-particle" style="bottom: 20%; left: 50%; animation-delay: 7s;"></div>
+                <div class="komorebi-particle" style="bottom: 5%; right: 5%; animation-delay: 3s;"></div>
+            </div>
+            
+            <div class="relative z-10 mx-auto max-w-4xl px-4">
+                <p class="serif text-xl md:text-2xl font-semibold text-[#8d9f86] mb-4 animate-fade-in-up">
+                    子どもの“好き”は、未来をつくる力になる。
                 </p>
-                <div class="pt-8 animate-fade-in-up" style="animation-delay: 0.8s;">
-                    <button onclick="scrollToSection('philosophy')" class="group flex flex-col items-center mx-auto text-[#8d9f86] text-sm hover:text-[#6b6564] transition-colors">
-                        <span class="mb-2">物語をはじめる</span>
-                        <span class="text-2xl group-hover:translate-y-2 transition-transform">↓</span>
-                    </button>
+                <h1 class="serif text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#433d3c] mb-4 leading-tight animate-fade-in-up" style="animation-delay: 0.2s;">
+                    心を育む<br class="md:hidden">子どもガチ店長プログラム
+                </h1>
+                <p class="text-lg md:text-xl text-[#6b6664] mb-8 animate-fade-in-up" style="animation-delay: 0.4s;">
+                    内発的動機づけをエンジンにした“価値創造体験”です。
+                </p>
+
+                <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex justify-center animate-fade-in-up" style="animation-delay: 0.6s;">
+                    <a href="#cta" class="inline-block bg-[#dcb66f] text-white py-3 px-8 rounded-full font-bold text-lg hover:bg-[#c5a15c] transition-colors shadow-lg">プログラム詳細を見る</a>
+                    <a href="#support" class="inline-block bg-white text-[#8d9f86] border-2 border-[#8d9f86] py-3 px-8 rounded-full font-bold text-lg hover:bg-[#f7f5f0] transition-colors shadow-lg">安心のサポート体制</a>
                 </div>
             </div>
         </section>
 
-        <!-- Philosophy & Background Section -->
-        <section id="philosophy" class="py-20 md:py-32 container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">Background</span>
-                    <h2 class="text-3xl md:text-4xl mb-6 text-[#433d3c]">なぜ、この場所を作ったのか</h2>
-                    <p class="text-[#6b6564] leading-relaxed">
-                        単発のイベントで終わらせたくない。<br>
-                        「売れた・売れない」の結果だけで、子どもの心を測らない。<br>
-                        深い学びが生まれるには、「時間」と「聴く姿勢」が必要です。
+        <section id="philosophy-core" class="py-16 lg:py-24 bg-[#fdfbf7] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-2xl md:text-3xl font-bold text-[#8d9f86] mb-8 text-center">
+                    内発的動機づけをエンジンにした“価値創造体験”
+                </h2>
+                <div class="space-y-6 text-base md:text-lg leading-relaxed mb-12">
+                    <p>
+                        子どもたちは、本来みな「好き」「やってみたい」という内から湧き上がるエネルギーを持っています。
+                    </p>
+                    <p>
+                        しかし現代社会は、テスト・評価・効率・成果を重視した「外発的動機づけの世界」に包まれています。だからこそ、子ども自身の**“内発的動機”を大切に育てること**は、学びの根っこを育てることと同じ。
+                    </p>
+                    <p>
+                        ここも式「子どもガチ店長」は、その根っこから始まる**“本物の学び”**を形にするプログラムです。
                     </p>
                 </div>
 
-                <!-- Interactive Comparison -->
+                <div class="grid lg:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <h3 class="serif text-xl font-bold text-[#dcb66f] border-l-4 border-[#dcb66f] pl-3">内発的動機づけとは？</h3>
+                        <p>
+                            外から与えられる「ご褒美」や「評価」ではなく、“自分で選び、やりたいからやる”という心の動き。
+                        </p>
+                        <blockquote class="italic text-sm text-[#9ca3af] border-l-2 border-[#f0eee6] pl-3 my-4">
+                            「知るものはこれを好むものに如（し）かず。好むものはこれを楽しむものに如（し）かず。」<br>
+                            学びの頂点は「楽しむ」状態（＝没頭・フロー）にあります。（孔子）
+                        </blockquote>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="serif text-xl font-bold text-[#8d9f86] border-l-4 border-[#8d9f86] pl-3">ここも式「上昇スパイラル」</h3>
+                        <p class="font-semibold text-lg text-center bg-[#f7f5f0] p-4 rounded-xl shadow-inner border border-[#f0eee6] tracking-wider">
+                            好き → 好奇心 → 行動 → 成功体験 → 自己効力感
+                        </p>
+                        <p>
+                            この**“上昇スパイラル”**こそが、子どもを「自分で進める学び手」に育てます。起業体験は、子どもの内から湧き起こる力を「社会につなぐ」ための体験的な舞台なのです。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="philosophy" class="py-16 lg:py-24 bg-[#f7f5f0] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    内発的動機を育むための、<br class="md:hidden">ここも流アプローチ
+                </h2>
+                
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-[#f0eee6]">
                     <div class="flex border-b border-[#f0eee6]">
                         <button onclick="setComparison('general')" id="btn-general" class="flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] transition-colors">結果中心の短期的な視点</button>
                         <button onclick="setComparison('kokomo')" id="btn-kokomo" class="flex-1 py-4 text-center font-bold bg-white text-[#8d9f86] border-t-2 border-[#8d9f86]">ここも（プロセス中心の長期的な視点）</button>
-    
-                </div>
+                    </div>
                     <div class="p-8 min-h-[300px] flex items-center justify-center">
                         <div id="comparison-content" class="text-center w-full max-w-2xl">
-                            <!-- Content injected via JS -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
-                        <div class="text-3xl mb-3">🌱</div>
-                        <h3 class="font-bold mb-2">時間をかける</h3>
-                        <p class="text-sm text-[#6b6564]">8〜10週間かけて、失敗と修正の物語を紡ぎます。</p>
-                    </div>
-                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
-                        <div class="text-3xl mb-3">👂</div>
-                        <h3 class="font-bold mb-2">言葉を聴く</h3>
-                        <p class="text-sm text-[#6b6564]">大人は指示せず、子どもの「好き」の翻訳者になります。</p>
-                    </div>
-                    <div class="p-6 bg-[#fffdf5] rounded-xl border border-[#f0eee6]">
-                        <div class="text-3xl mb-3">🤝</div>
-                        <h3 class="font-bold mb-2">親子の信頼</h3>
-                        <p class="text-sm text-[#6b6564]">親は「評価者」ではなく「発見者」へと変わります。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Process Section (Timeline) -->
-        <section id="process" class="py-20 bg-[#f7f5f0]">
-            <div class="container mx-auto px-6">
-                <div class="max-w-5xl mx-auto">
-                    <div class="mb-12 text-center md:text-left">
-                        <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">The Journey</span>
-                        <h2 class="text-3xl md:text-4xl mb-4 text-[#433d3c]">8〜10週間の物語</h2>
-                        <p class="text-[#6b6564]">
-                            これは単なる準備期間ではありません。<br>
-                            種を見つけ、畑を耕し、太陽を浴びて、収穫するまでの「育つプロセス」です。
-                        </p>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Timeline Nav -->
-                        <div class="md:w-1/3 space-y-4 relative">
-                            <div class="absolute left-4 top-4 bottom-4 w-0.5 bg-[#d1d5db] md:block hidden"></div>
-                            
-                            <!-- Timeline Buttons -->
-                            <button onclick="updateTimeline(0)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group active-timeline" data-index="0">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 0</span>
-                                <span class="font-serif font-bold text-lg text-[#433d3c]">種を見つける時間</span>
-                            </button>
-                            
-                            <button onclick="updateTimeline(1)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="1">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 1-3</span>
-                                <span class="font-serif font-bold text-lg text-[#433d3c]">畑を耕す時間</span>
-                            </button>
-                            
-                            <button onclick="updateTimeline(2)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="2">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 4-7</span>
-                                <span class="font-serif font-bold text-lg text-[#433d3c]">太陽を浴びる時間</span>
-                            </button>
-                            
-                            <button onclick="updateTimeline(3)" class="timeline-btn w-full text-left relative pl-10 py-3 rounded-lg hover:bg-white/50 transition-all group" data-index="3">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#d1d5db] group-hover:bg-[#8d9f86] transition-colors ring-4 ring-[#f7f5f0] z-10 indicator"></span>
-                                <span class="text-xs font-bold text-[#8d9f86] block mb-1">Week 8-10</span>
-                                <span class="font-serif font-bold text-lg text-[#433d3c]">収穫、そして次へ</span>
-                            </button>
-                        </div>
-
-                        <!-- Timeline Content Display -->
-                        <div class="md:w-2/3 bg-white p-8 rounded-2xl shadow-lg border border-[#f0eee6] relative overflow-hidden min-h-[300px] flex items-center">
-                            <div class="absolute top-0 right-0 p-4 opacity-10 text-9xl">🌿</div>
-                            <div id="timeline-content" class="w-full">
-                                <!-- JS Injection -->
                             </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="program-flow" class="py-16 lg:py-24 bg-[#fdfbf7] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    プログラム全体像（8〜10週間で進む道のり）
+                </h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="col-span-1 md:col-span-2 lg:col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#8d9f86] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#8d9f86] mb-2">Week1</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">好きの棚卸し</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">内発的動機を発火させる最初のステップ。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#dcb66f] mb-2">Week2</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">価値づくり</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">「誰に届けたいか？」を深く考える。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#dcb66f] mb-2">Week3〜4</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">商品・サービス企画</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">具体的なアイデアを形にする。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#8d9f86] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#8d9f86] mb-2">Week5</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">試作（プロトタイプ）</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">実際に作ってみて課題を見つける。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#dcb66f] mb-2">Week6</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">外部レビュー</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">プロや仲間からのフィードバックを受ける。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#8d9f86] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#8d9f86] mb-2">Week7</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">出店準備</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">マルシェに向けて最終調整。</p>
+                    </div>
+                    <div class="col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#dcb66f] mb-2">Week8</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">マルシェ出店</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">社会との接点を持つ、本番の日。</p>
+                    </div>
+                    <div class="col-span-1 md:col-span-2 lg:col-span-1 bg-white p-6 rounded-2xl shadow-lg border-t-4 border-[#8d9f86] transition-shadow duration-300 hover:shadow-xl">
+                        <p class="text-sm font-bold text-[#8d9f86] mb-2">Week9〜10</p>
+                        <h3 class="serif text-lg font-bold text-[#433d3c]">振り返り・次の挑戦へ</h3>
+                        <p class="text-sm mt-2 text-[#6b6664] leading-relaxed">学びを言語化し、次へ繋げる。</p>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section id="rubric" class="py-16 lg:py-24 bg-[#f7f5f0] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    学びの根幹を支える「ここも式ルーブリック」
+                </h2>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-[#f0eee6] space-y-8">
+                    <p class="text-lg leading-relaxed text-center font-semibold text-[#8d9f86]">
+                        本プログラムのルーブリックは、子どもの成長を「評価するため」ではなく、<br class="hidden md:inline">
+                        内発的動機にもとづく学びを**“支えるための道具”**です。
+                    </p>
+
+                    <div>
+                        <h3 class="serif text-xl font-bold text-[#dcb66f] mb-4 border-b pb-2">4つの評価領域</h3>
+                        <div class="grid md:grid-cols-2 gap-4 text-base">
+                            <p class="bg-[#f7f5f0] p-3 rounded-lg border border-[#f0eee6] font-medium">自己理解・自己決定</p>
+                            <p class="bg-[#f7f5f0] p-3 rounded-lg border border-[#f0eee6] font-medium">計画・遂行・改善</p>
+                            <p class="bg-[#f7f5f0] p-3 rounded-lg border border-[#f0eee6] font-medium">社会接続・コミュニケーション</p>
+                            <p class="bg-[#f7f5f0] p-3 rounded-lg border border-[#f0eee6] font-medium">価値創造・振り返り</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="serif text-xl font-bold text-[#8d9f86] mb-4 border-b pb-2">年齢別に最適化された指標</h3>
+                        <ul class="list-disc list-inside space-y-2 text-base pl-2">
+                            <li>**小学校低学年**：好き→行動へのプロセスに注目</li>
+                            <li>**中学年**：相手意識（誰に価値を届けるか）</li>
+                            <li>**高学年**：プロジェクト遂行能力と自律性</li>
+                            <li>**中学生**：論理的な構成・協働性</li>
+                            <li>**高校生**：価値創造・キャリア形成への意識</li>
+                        </ul>
+                        <div class="text-sm mt-6 text-right">
+                            <a href="#" class="text-[#8d9f86] hover:text-[#433d3c] font-bold transition-colors">→ 詳しくは「ルーブリックを見る」ボタンで遷移</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Growth Section (Radar Chart) -->
-        <section id="growth" class="py-20 container mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
-                
-                <div class="lg:w-1/2 space-y-6">
-                    <span class="text-[#dcb66f] font-bold tracking-widest text-xs uppercase mb-2 block">Educational Effect</span>
-                    <h2 class="text-3xl md:text-4xl text-[#433d3c]">目に見えない力が、<br>静かに根を張る</h2>
-                    <p class="text-[#6b6564] leading-relaxed">
-                        このプログラムで子どもたちが手にするのは、<br>教科書で学ぶだけの「硬い知識」ではありません。<br>
-                        「自分にはできる」という確かな手ざわり。<br>
-                        学校の成績表には載らない、人生を支える「非認知能力」です。
-                    </p>
-                    
-                    <div class="bg-[#fcfbf9] p-6 rounded-xl border border-[#f0eee6]">
-                        <h4 id="skill-title" class="font-bold text-lg text-[#8d9f86] mb-2">チャートの項目をタップしてください</h4>
-                        <p id="skill-desc" class="text-sm text-[#6b6564]">
-                            右のグラフは、プログラムを通じて育まれる5つの力を表しています。<br>
-                            それぞれの項目をタップして、どのような変化が生まれるかをご覧ください。
-                        </p>
-                   </div>
-                </div>
-
-                <div class="lg:w-1/2 w-full flex justify-center">
-                    <div id="skill-icons-container" class="w-full max-w-md p-6 bg-white rounded-3xl shadow-lg border border-[#f0eee6] grid grid-cols-3 gap-4">
-                        
-                        <button onclick="updateSkillDesc('自己効力感')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20 active-skill" data-skill="自己効力感">
-                            <img src="https://github.com/kokomoibasyo-dev/kokomolp/blob/main/Gemini_Generated_Image_j5dplcj5dplcj5dp.png?raw=true" alt="自己効力感アイコン" class="size-20 mx-auto block mb-1">
-                            <span class="text-xs font-bold text-[#433d3c]">自己効力感</span>
-                        </button>
-
-                        <button onclick="updateSkillDesc('言語化/メタ認知')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="言語化/メタ認知">
-                            <img src="https://github.com/kokomoibasyo-dev/kokomolp/blob/main/Gemini_Generated_Image_htymu7htymu7htym.png?raw=true" alt="言語化/メタ認知アイコン" class="size-20 mx-auto block mb-1">
-                            <span class="text-xs font-bold text-[#433d3c]">言語化/<br>メタ認知</span>
-                        </button>
-                        
-                        <button onclick="updateSkillDesc('レジリエンス')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="レジリエンス">
-                            <img src="https://github.com/kokomoibasyo-dev/kokomolp/blob/main/Gemini_Generated_Image_s4s41fs4s41fs4s4.png?raw=true" alt="レジリエンスアイコン" class="size-20 mx-auto block mb-1">
-                            <span class="text-xs font-bold text-[#433d3c]">レジリエンス</span>
-                        </button>
-                        
-                        <button onclick="updateSkillDesc('探究心')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="探究心">
-                            <img src="https://github.com/kokomoibasyo-dev/kokomolp/blob/main/Gemini_Generated_Image_481zs4481zs4481z.png?raw=true" alt="探究心アイコン" class="size-20 mx-auto block mb-1">
-                            <span class="text-xs font-bold text-[#433d3c]">探究心</span>
-                        </button>
-                        
-                        <button onclick="updateSkillDesc('社会性')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="社会性">
-                            <img src="https://github.com/kokomoibasyo-dev/kokomolp/blob/main/Gemini_Generated_Image_e7wnyye7wnyye7wn.png?raw=true" alt="社会性アイコン" class="size-20 mx-auto block mb-1">
-                            <span class="text-xs font-bold text-[#433d3c]">社会性</span>
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Parent's Benefits -->
-        <section id="parents" class="py-20 bg-[#8d9f86]/10 relative overflow-hidden">
-            <div class="absolute -top-20 -left-20 w-64 h-64 bg-[#8d9f86]/10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-[#dcb66f]/10 rounded-full blur-3xl"></div>
-
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="text-center mb-16">
-                    <span class="text-[#8d9f86] font-bold tracking-widest text-xs uppercase mb-2 block">For Parents</span>
-                    <h2 class="text-3xl md:text-4xl mb-4 text-[#433d3c]">親子の未来への贈り物</h2>
-                    <p class="text-[#6b6564] max-w-2xl mx-auto">
-                        子どもが変わる時、親もまた変わります。<br>
-                        不安や焦りを手放し、子どもを信じる「安心」を手に入れませんか。
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <!-- Card 1 -->
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#8d9f86] card-hover">
-                        <div class="h-12 w-12 bg-[#8d9f86]/20 rounded-full flex items-center justify-center text-2xl mb-6">👀</div>
-                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">子ども観のアップデート</h3>
-                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
-                            家庭では見えなかった、真剣な眼差しや工夫する力。「うちの子、こんな力があったんだ」という発見が、親子の対話を豊かにします。
-                        </p>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#dcb66f] card-hover">
-                        <div class="h-12 w-12 bg-[#dcb66f]/20 rounded-full flex items-center justify-center text-2xl mb-6">👐</div>
-                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">伴走の技法を学ぶ</h3>
-                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
-                            「指示」ではなく「問いかけ」を。親は「評価者」から「伴走者」へ。ここで学ぶ「待つ・聴く」技術は、一生ものの財産になります。
-                        </p>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#c27ba0] card-hover">
-                        <div class="h-12 w-12 bg-[#c27ba0]/20 rounded-full flex items-center justify-center text-2xl mb-6">🍵</div>
-                        <h3 class="font-bold text-xl mb-3 text-[#433d3c]">親自身の安心</h3>
-                        <p class="text-[#6b6564] text-sm leading-relaxed mb-4">
-                            「学校だけが全てじゃない」。教育観が広がることで、焦りから解放されます。親の笑顔と安心こそが、子どもの挑戦を支える土台です。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq" class="py-20 container mx-auto px-6">
-            <div class="max-w-3xl mx-auto">
-                <h2 class="text-3xl md:text-4xl mb-12 text-center text-[#433d3c]">よくある不安への対話</h2>
-                
-                <div class="space-y-4" id="faq-container">
-                    <!-- FAQ Items injected via JS -->
-                </div>
-            </div>
-        </section>
-<!-- Pricing Section -->
-<section id="pricing" class="py-16 bg-white/80">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Heading -->
-    <div class="text-center mb-12">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-        参加コースと料金
-      </h2>
-      <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
-        すべてのコースは、土曜日 11:00〜14:00 開催のマイクロ起業体験プログラムです。<br class="hidden sm:inline">
-        会場使用料・教材費・資料印刷代などを含んだ料金です。
-      </p>
-    </div>
-
-    <!-- Pricing cards -->
-    <div class="grid gap-6 md:grid-cols-3">
-      <!-- ベーシックコース -->
-      <div class="bg-white rounded-2xl shadow-md border border-amber-100 p-6 flex flex-col">
-        <div class="mb-4">
-          <p class="text-xs font-semibold tracking-wide text-amber-600 mb-1">
-            エントリー向け
-          </p>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">
-            ベーシックコース
-          </h3>
-          <p class="text-sm text-gray-600">
-            「まずは試してみたい」方向けの短縮版プログラム。
-          </p>
-        </div>
-
-        <div class="mb-4">
-          <p class="text-3xl font-bold text-gray-900">
-            25,000<span class="text-lg align-top">円</span>
-          </p>
-          <p class="text-xs text-gray-500 mt-1">
-            （税込）／全8回（各90〜120分程度）
-          </p>
-        </div>
-
-        <ul class="space-y-2 text-sm text-gray-700 flex-1">
-          <li>・小学生〜高校生対象</li>
-          <li>・「好き」や「得意」を棚卸しするワーク</li>
-          <li>・商品・サービスづくりの基礎</li>
-          <li>・ミニ販売体験またはプレ発表</li>
-        </ul>
-
-        <p class="mt-4 text-[11px] text-gray-500">
-          ※ フル版より回数をしぼった、導入用のコースです。
-        </p>
-      </div>
-
-      <!-- 丸ごとお任せコース（おすすめ） -->
-      <div class="bg-white rounded-2xl shadow-lg border-2 border-amber-300 p-6 relative flex flex-col">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span class="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-amber-500 text-white shadow">
-            おすすめ
-          </span>
-        </div>
-
-        <div class="mb-4 mt-1">
-          <p class="text-xs font-semibold tracking-wide text-amber-700 mb-1">
-            子ども主体でじっくり取り組みたい方へ
-          </p>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">
-            丸ごとお任せコース
-          </h3>
-          <p class="text-sm text-gray-600">
-            子どもの「やりたいこと」から始める、10週間のフルプログラム。
-          </p>
-        </div>
-
-        <div class="mb-4">
-          <p class="text-3xl font-bold text-gray-900">
-            38,000<span class="text-lg align-top">円</span>
-          </p>
-          <p class="text-xs text-gray-500 mt-1">
-            （税込）／全10回（各90〜120分程度）
-          </p>
-        </div>
-
-        <ul class="space-y-2 text-sm text-gray-700 flex-1">
-          <li>・小学生〜高校生対象</li>
-          <li>・「好き」「得意」を起点にした事業づくり</li>
-          <li>・価格設定・原価計算・売り方の工夫</li>
-          <li>・実際のマルシェ等での出店体験</li>
-          <li>・ふりかえりと「次につなげる」振り返りシート</li>
-        </ul>
-
-        <p class="mt-4 text-[11px] text-gray-500">
-          ※ 子どもの学びと経験値をしっかり積み上げたい方におすすめです。
-        </p>
-      </div>
-
-      <!-- 親子で挑戦コース -->
-      <div class="bg-white rounded-2xl shadow-md border border-amber-100 p-6 flex flex-col">
-        <div class="mb-4">
-          <p class="text-xs font-semibold tracking-wide text-amber-600 mb-1">
-            親子で本気で取り組みたい方へ
-          </p>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">
-            親子で挑戦コース
-          </h3>
-          <p class="text-sm text-gray-600">
-            子どもの学びに加えて、「応援する親」の在り方も一緒に学ぶコース。
-          </p>
-        </div>
-
-        <div class="mb-4">
-          <p class="text-3xl font-bold text-gray-900">
-            55,000<span class="text-lg align-top">円</span>
-          </p>
-          <p class="text-xs text-gray-500 mt-1">
-            （税込）／全10回＋親向けセッション2回
-          </p>
-        </div>
-
-        <ul class="space-y-2 text-sm text-gray-700 flex-1">
-          <li>・丸ごとお任せコースの内容をすべて含む</li>
-          <li>・親向け「子どもを応援するための心得」講座</li>
-          <li>・「これからの時代を生きる子どもの親に必要な視点」</li>
-          <li>・家庭での関わり方や声かけの実践ワーク</li>
-          <li>・親子でふりかえりを行う時間の設計</li>
-        </ul>
-
-        <p class="mt-4 text-[11px] text-gray-500">
-          ※ 子どもの変化を、家庭の関わり方の変化につなげたい方におすすめです。
-        </p>
-      </div>
-    </div>
-
-    <p class="mt-8 text-[11px] text-gray-500 text-center leading-relaxed">
-      ※ 経済的な事情があるご家庭には、分割払い・減額など個別のご相談も承ります。<br>
-      「参加したいけれど難しいかも…」という場合も、まずは一度ご相談ください。
-    </p>
-  </div>
-</section>
-
-        <!-- CTA Section -->
-        <section id="cta" class="py-24 bg-[#433d3c] text-[#fdfbf7] relative overflow-hidden">
-            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#dcb66f 1px, transparent 1px); background-size: 30px 30px;"></div>
-            
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <h2 class="text-3xl md:text-5xl font-serif mb-8 leading-tight">
-                    子どもの「好き」を<br>
-                    世界とつなげる<br>
-                    
+        <section id="growth" class="py-16 lg:py-24 bg-[#fdfbf7] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    目に見えない力が、静かに根を張る
                 </h2>
-                <p class="text-lg md:text-xl text-[#d1d5db] mb-12 max-w-2xl mx-auto">
-                    子どもが見つけた宝物　<br>
-                    —その輝きが、誰かの喜びになる。<br>
-                    
-                </p>
-                
-                <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                    <a href="https://forms.gle/DcQghGvfUzPrHwKG7" target="_blank"
-    class="bg-[#8d9f86] text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-[#7a8b74] transition-all shadow-lg hover:shadow-[#8d9f86]/50 transform hover:-translate-y-1 w-full md:w-auto">
-    プログラムに申し込む
-</a>
-                    <button class="bg-transparent border border-[#fdfbf7] text-[#fdfbf7] px-8 py-4 rounded-full text-lg hover:bg-[#fdfbf7]/10 transition-all w-full md:w-auto">
-                        詳細な資料を請求する
-                    </button>
+                <div class="flex flex-wrap lg:flex-nowrap gap-10">
+                    <div class="lg:w-1/2 w-full space-y-6">
+                        <div class="bg-white rounded-3xl p-8 shadow-xl border border-[#f0eee6] min-h-[280px]">
+                            <h3 id="skill-title" class="serif text-3xl font-bold text-[#dcb66f] mb-4">自己効力感</h3>
+                            <p id="skill-desc" class="text-lg leading-relaxed text-[#6b6664]"></p>
+                        </div>
+                        <div class="flex justify-center mt-6">
+                            <p class="text-sm text-[#9ca3af]">※アイコンをクリックすると詳細が表示されます</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/2 w-full flex justify-center">
+                        <div id="skill-icons-container" class="w-full max-w-md p-6 bg-white rounded-3xl shadow-lg border border-[#f0eee6] grid grid-cols-3 gap-4">
+                            
+                            <button onclick="updateSkillDesc('自己効力感')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20 active-skill" data-skill="自己効力感">
+                                <img src="URL_TO_JIKOKOURYOKUKAN_ICON.png" alt="自己効力感アイコン" class="size-16 mx-auto block mb-1">
+                                <span class="text-xs font-bold text-[#433d3c]">自己効力感</span>
+                            </button>
+
+                            <button onclick="updateSkillDesc('言語化/メタ認知')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="言語化/メタ認知">
+                                <img src="URL_TO_GENGOKAMETANINCHI_ICON.png" alt="言語化/メタ認知アイコン" class="size-16 mx-auto block mb-1">
+                                <span class="text-xs font-bold text-[#433d3c]">言語化/メタ認知</span>
+                            </button>
+                            
+                            <button onclick="updateSkillDesc('レジリエンス')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="レジリエンス">
+                                <img src="URL_TO_RESILIENCE_ICON.png" alt="レジリエンスアイコン" class="size-16 mx-auto block mb-1">
+                                <span class="text-xs font-bold text-[#433d3c]">レジリエンス</span>
+                            </button>
+                            
+                            <button onclick="updateSkillDesc('探究心')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="探究心">
+                                <img src="URL_TO_TANKYUSHIN_ICON.png" alt="探究心アイコン" class="size-16 mx-auto block mb-1">
+                                <span class="text-xs font-bold text-[#433d3c]">探究心</span>
+                            </button>
+                            
+                            <button onclick="updateSkillDesc('社会性')" class="skill-icon-btn p-4 rounded-xl text-center transition-all bg-[#fcfbf9] hover:bg-[#dcb66f]/20" data-skill="社会性">
+                                <img src="URL_TO_SHAKAUSEI_ICON.png" alt="社会性アイコン" class="size-16 mx-auto block mb-1">
+                                <span class="text-xs font-bold text-[#433d3c]">社会性</span>
+                            </button>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="mt-10">
-    <p class="text-[#dcb66f] text-2xl md:text-2xl tracking-wider uppercase opacity-90">
-        本プログラムは、株式会社松田FRP工業を公式パートナーとして実施しています。
-    </p>
-</div>
+                    <p class="text-[#dcb66f] text-xl md:text-xl tracking-wider uppercase opacity-90 text-center">
+                        本プログラムは、株式会社松田FRP工業を公式パートナーとして実施しています。
+                    </p>
+                </div>
             </div>
         </section>
 
-        <footer class="bg-[#363130] text-[#9ca3af] py-8 text-center text-xs">
-            <p>&copy; Kokomo. All Rights Reserved.</p>
-        </footer>
+        <section id="support" class="py-16 lg:py-24 bg-[#f7f5f0] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    安心・安全のサポート体制
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-[#f0eee6] space-y-4">
+                        <div class="flex items-center space-x-3 text-[#8d9f86]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                            <h3 class="text-xl font-bold">保護者と子どもへの配慮</h3>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-base pl-4">
+                            <li>保護者との事前面談で目標を共有</li>
+                            <li>商品の安全基準確認</li>
+                            <li>金銭管理のサポート</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-[#f0eee6] space-y-4">
+                        <div class="flex items-center space-x-3 text-[#dcb66f]">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.5L12 22.5L9 19.5M3 10.5h18M5 13.5v-6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6M9 6v3M15 6v3" /></svg>
+                            <h3 class="text-xl font-bold">現場と運営の徹底管理</h3>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-base pl-4">
+                            <li>伴走スタッフの**二人体制**による手厚いサポート</li>
+                            <li>マルシェ主催者との事前連携による安全な出店環境の確保</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
 
+        <section id="testimonials" class="py-16 lg:py-24 bg-[#fdfbf7] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    参加した保護者の声
+                </h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-2xl">
+                        <p class="text-4xl mb-4 text-[#dcb66f]">❝</p>
+                        <p class="italic text-base leading-relaxed">
+                            うちの子がこんなに自分で決めたのは初めて。親が手を出す必要がない、本物の「主体性」を見た気がします。
+                        </p>
+                        <p class="text-sm mt-4 text-right font-bold text-[#8d9f86]">— 保護者 A様</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-[#8d9f86] transition-shadow duration-300 hover:shadow-2xl">
+                        <p class="text-4xl mb-4 text-[#8d9f86]">❝</p>
+                        <p class="italic text-base leading-relaxed">
+                            苦手だった人前で話すことができるようになり、自信に繋がったようです。内面の成長を感じました。
+                        </p>
+                        <p class="text-sm mt-4 text-right font-bold text-[#8d9f86]">— 保護者 B様</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-[#dcb66f] transition-shadow duration-300 hover:shadow-2xl">
+                        <p class="text-4xl mb-4 text-[#dcb66f]">❝</p>
+                        <p class="italic text-base leading-relaxed">
+                            好きなことが“誰かの役に立つ”体験は大きいですね。遊びではなく、社会との繋がりを感じられたようです。
+                        </p>
+                        <p class="text-sm mt-4 text-right font-bold text-[#8d9f86]">— 保護者 C様</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="faq" class="py-16 lg:py-24 bg-[#f7f5f0] animate-fade-in-up">
+            <div class="mx-auto max-w-4xl px-4 lg:px-8">
+                <h2 class="serif text-3xl font-bold text-[#433d3c] mb-12 text-center">
+                    よくあるご質問 (FAQ)
+                </h2>
+                <div id="faq-list" class="space-y-4">
+                    </div>
+            </div>
+        </section>
+
+        <section id="cta" class="py-16 lg:py-24 bg-[#8d9f86] text-white text-center animate-fade-in-up">
+            <div class="mx-auto max-w-2xl px-4">
+                <h2 class="serif text-4xl font-extrabold mb-4">
+                    まずは無料説明会にご参加ください
+                </h2>
+                <p class="text-lg mb-8 opacity-90">
+                    プログラムの詳細、子育ての悩み、お子様の特性に合わせた進め方など、何でもご相談ください。
+                </p>
+                <a href="#" class="inline-block bg-[#dcb66f] text-white py-4 px-10 rounded-full font-bold text-xl hover:bg-[#c5a15c] transition-colors shadow-2xl">無料説明会を予約する</a>
+            </div>
+        </section>
     </main>
 
+    <footer class="py-8 text-center text-sm text-[#9ca3af] bg-[#f0eee6]">
+        <div class="mx-auto max-w-7xl px-4">
+            <p>&copy; 2025 COCOMOKO. All Rights Reserved. | <a href="#" class="hover:underline">特定商取引法に基づく表記</a></p>
+        </div>
+    </footer>
+
     <script>
-        // --- Data & State ---
-        
-        // 1. Comparison Data
+        // --- 1. Comparison Data (比較セクション用) ---
         const comparisonData = {
             general: {
                 title: "結果中心の短期的な視点",
-        
-        description: "主題は「売上」や「お店ごっこ」に焦点が当てられます。<br>体験は1日で完結し、準備は効率化されたキットが多い。<br>親の役割は「お客様」または「手伝い役」となる傾向があります。",
+                description: "主題は「売上」や「お店ごっこ」に焦点が当てられます。<br>体験は1日で完結し、準備は効率化されたキットが多い。<br>親の役割は「お客様」または「手伝い役」となる傾向があります。",
                 icon: "🎪"
             },
             kokomo: {
                 title: "ここも（プロセス中心の長期的な視点）",
                 description: "「自己表現」と「プロセス」が中心。<br>8〜10週間かけ、ゼロから自分の言葉で価値を作る。<br>親は「伴走者」として、子の内面的な成長を見守る。",
-               
- icon: "🌿"
+                icon: "🌿"
             }
         };
 
-        // 2. Timeline Data
-        const timelineData = [
-            {
-                week: "Week 0",
-                title: "種を見つける時間",
-                subtitle: "言語化と価値の定義",
-                desc: "「何の店長になるか」ではなく、「あなたは何が好きなのか」「誰をどうしたいのか」を対話で深掘りします。子どもの「好き」を、初めて明確な「ことば」にする大切な時間です。"
-            },
-            {
-                week: "Week 1-3",
-                title: "畑を耕す時間",
-                subtitle: "アイデアの具体化と試行錯誤",
-                desc: "あたたかい雰囲気の中で、アイデアをどう形にするか没頭します。手書きのメモ、試作品づくり。失敗は「次のヒント」として歓迎されます。"
-            },
-            {
-                week: "Week 4-7",
-                title: "太陽を浴びる時間",
-                subtitle: "プロモーションと実践",
-                desc: "マルシェ本番への準備。看板づくり、価格設定、そして「思い」をどう伝えるか。大人の意見ではなく、「どう伝えるのが一番自分らしいか」を子どもが選択します。"
-            },
-            {
-                week: "Week 8-10",
-                title: "収穫、そして次へ",
-                subtitle: "本番と物語の振り返り",
-                desc: "いよいよ本番。世界とつながる緊張と喜び。そして最も大切なのは、終わった後の「振り返り」。何を感じ、次はどうしたいか。このメタ認知こそが最大の収穫です。"
-            }
-        ];
-
-        // 3. Growth Data (Chart)
+        // --- 2. Skill Details (非認知能力セクション用) ---
         const skillDetails = {
-            '自己効力感': '「自分にはできる」という感覚。誰かの指示ではなく、自分で考え形にしたものが世界に届いた時、揺るぎない自信が生まれます。',
-            '言語化/メタ認知': '「なぜそれが好きなの？」という問いに答える中で、曖昧な感情を明確な言葉にする力が育ちます。自分を客観的に見る力です。',
-            'レジリエンス': '失敗からの回復力。思い通りにいかない時、「失敗した」ではなく「次はどうする？」と捉え直すしなやかな強さを養います。',
-            '探究心': '「もっと良くするには？」と自ら深掘りする力。正解のない問いに対して、楽しみながら答えを探し続ける姿勢です。',
-            '社会性': '自分の作品を通して他者とつながる喜び。学校の成績とは違う軸で、社会の中での自分の役割や価値を実感します。'
+            '自己効力感': '「やればできる」という自信と信念。小さな成功体験とフィードバックの繰り返しによって、困難に立ち向かう力が育ちます。',
+            '言語化/メタ認知': '自分の感情、思考、行動を客観的に捉え、言葉にする力。これにより、課題解決能力や他者への共感力が向上します。',
+            'レジリエンス': '失敗や困難から立ち直る、心の回復力。プログラムを通して、失敗を「成長の道」として受け止める視点を獲得します。',
+            '探究心': '自分の「好き」や「なぜ？」を深掘りし、自ら学びを進める力。好奇心から始まる主体的な学びが、生涯の学習姿勢を形成します。',
+            '社会性': '他者と協力し、異なる意見を持つ相手と建設的な関係を築く力。自分の価値を社会につなげる経験を通じて育まれます。'
         };
 
-        // 4. FAQ Data
+        // --- 3. FAQ Data (FAQセクション用) ---
         const faqData = [
-            { q: "難しそうに見えます。うちの子にできるでしょうか？", a: "大丈夫です。私たちは「できるか」より「やってみたい気持ち」を大切にします。難しいと感じる瞬間こそが学びの入口。伴走者がお子さんのペースに合わせて深呼吸のリズムを整えます。" },
-            { q: "売上が目的ではないとのことですが、赤字になっても良いのですか？", a: "はい。目的は「価値を届ける体験」です。売上はフィードバックの一つに過ぎません。たとえ売れなくても、その理由を探り次につなげる「物語」こそが重要です。" },
-            { q: "不登校や学校が苦手な子でも参加できますか？", a: "もちろんです。私たちは不登校を「深呼吸の時間」と捉えています。学校を責めることも、無理に行かせることもしません。ここでは学びの主権は子どもにあります。安心してご参加ください。" },
-            { q: "親はどこまで手伝えば良いですか？", a: "親は「評価者」ではなく「発見者」です。手を貸すより、「どう思った？」と聴く姿勢が支援になります。その具体的な「伴走の技法」もプログラム内でお伝えします。" }
+            { q: "対象年齢を教えてください。", a: "主に小学校3年生から中学校3年生までを想定していますが、ご家庭の判断で小学1年生から高校生までご参加いただけます。年齢に合わせたルーブリックで成長をサポートします。" },
+            { q: "プログラム期間と頻度を教えてください。", a: "期間は8〜10週間で、週に1回、オンラインまたは対面でのセッションを実施します。マルシェ出店は期間の最終週に行います。" },
+            { q: "親のサポートはどの程度必要ですか？", a: "プログラムの主役は子どもです。親御さんには「伴走者」として、安全管理と精神的なサポートをお願いしています。過度な手伝いはご遠慮いただいています。" },
+            { q: "プログラム費用を教えてください。", a: "費用については、説明会にて詳細をご案内しています。まずは無料説明会にご参加ください。" }
         ];
 
         // --- Logic ---
 
-        // Init Interactions
-        document.addEventListener('DOMContentLoaded', () => {
-            // Setup Atmosphere
-            initAtmosphere();
-            
-            // Setup Comparison
-            setComparison('kokomo'); // Default to show the unique value
-
-            // Setup Timeline
-            updateTimeline(0);
-
-            // Set default skill description to show
-            updateSkillDesc('自己効力感'); // <- これを追加
-
-            // Setup FAQ
-            renderFAQ();
-            
-            // Add scroll animations
-            observeAnimations();
-        });
-
-        // Atmosphere (Canvas-like effect with DOM for performance/simplicity in this constraints)
-        function initAtmosphere() {
-            const container = document.getElementById('atmosphere');
-            for(let i=0; i<8; i++) {
-                const orb = document.createElement('div');
-                orb.classList.add('komorebi-light');
-                const size = Math.random() * 300 + 100;
-                orb.style.width = `${size}px`;
-                orb.style.height = `${size}px`;
-                orb.style.left = `${Math.random() * 100}%`;
-                orb.style.top = `${Math.random() * 100}%`;
-                orb.style.animation = `sway ${Math.random() * 10 + 10}s infinite ease-in-out`;
-                orb.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(orb);
-            }
-        }
-
         // Comparison Logic
         function setComparison(type) {
-            const content = document.getElementById('comparison-content');
+            document.getElementById('btn-general').classList.remove('bg-white', 'text-[#8d9f86]', 'border-t-2', 'border-[#8d9f86]');
+            document.getElementById('btn-general').classList.add('bg-[#f7f5f0]', 'text-[#9ca3af]');
+            document.getElementById('btn-kokomo').classList.remove('bg-white', 'text-[#8d9f86]', 'border-t-2', 'border-[#8d9f86]');
+            document.getElementById('btn-kokomo').classList.add('bg-[#f7f5f0]', 'text-[#9ca3af]');
+
+            document.getElementById(`btn-${type}`).classList.remove('bg-[#f7f5f0]', 'text-[#9ca3af]');
+            document.getElementById(`btn-${type}`).classList.add('bg-white', 'text-[#8d9f86]', 'border-t-2', 'border-[#8d9f86]');
+
             const data = comparisonData[type];
-            
-            // Button Styles
-            const btnGeneral = document.getElementById('btn-general');
-            const btnKokomo = document.getElementById('btn-kokomo');
-            
-            if(type === 'general') {
-                btnGeneral.className = "flex-1 py-4 text-center font-bold bg-white text-[#6b6564] border-t-2 border-[#d1d5db]";
-                btnKokomo.className = "flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
-            } else {
-                btnGeneral.className = "flex-1 py-4 text-center font-bold bg-[#f7f5f0] text-[#9ca3af] border-t-2 border-transparent hover:bg-[#f0eee6]";
-                btnKokomo.className = "flex-1 py-4 text-center font-bold bg-white text-[#8d9f86] border-t-2 border-[#8d9f86]";
-            }
-
-            // Animate Content Swap
-            content.style.opacity = 0;
-            setTimeout(() => {
-                content.innerHTML = `
-                    <div class="text-6xl mb-6">${data.icon}</div>
-                    <h3 class="text-2xl font-serif font-bold mb-4 text-[#433d3c]">${data.title}</h3>
-                    <p class="text-[#6b6564] leading-loose">${data.description}</p>
-                `;
-                content.style.transition = 'opacity 0.5s ease';
-                content.style.opacity = 1;
-            }, 200);
-        }
-
-        // Timeline Logic
-        function updateTimeline(index) {
-            // Update buttons
-            document.querySelectorAll('.timeline-btn').forEach(btn => {
-                const indicator = btn.querySelector('.indicator');
-                const i = parseInt(btn.dataset.index);
-                
-                if (i === index) {
-                    btn.classList.add('bg-white', 'shadow-sm');
-                    indicator.classList.remove('bg-[#d1d5db]');
-                    indicator.classList.add('bg-[#8d9f86]');
-                } else {
-                    btn.classList.remove('bg-white', 'shadow-sm');
-                    indicator.classList.add('bg-[#d1d5db]');
-                    indicator.classList.remove('bg-[#8d9f86]');
-                }
-            });
-
-            // Update Content
-            const display = document.getElementById('timeline-content');
-            const data = timelineData[index];
-            
-            display.innerHTML = `
-                <div class="animate-fade-in">
-                    <span class="text-[#dcb66f] font-bold text-sm tracking-widest mb-2 block uppercase">${data.week}</span>
-                    <h3 class="text-2xl font-serif font-bold text-[#433d3c] mb-2">${data.title}</h3>
-                    <p class="text-[#8d9f86] font-bold mb-6">${data.subtitle}</p>
-                    <p class="text-[#6b6564] leading-loose">${data.desc}</p>
-                </div>
+            document.getElementById('comparison-content').innerHTML = `
+                <h3 class="serif text-2xl font-bold text-[#433d3c] mb-4">${data.icon} ${data.title}</h3>
+                <p class="text-lg leading-relaxed text-[#6b6664]">${data.description}</p>
             `;
         }
 
-        // --- 追加する新しいアイコン操作ロジック ---
-
+        // Skill Description Logic (新しいアイコンクリックロジック)
         function updateSkillDesc(label) {
             // 1. アイコンのアクティブ状態をリセット
             document.querySelectorAll('.skill-icon-btn').forEach(btn => {
@@ -751,52 +461,56 @@
             });
             
             // 2. クリックされたアイコンをアクティブに
-            // label と一致する data-skill 属性を持つボタンを探す
             const activeBtn = document.querySelector(`.skill-icon-btn[data-skill="${label}"]`);
             if(activeBtn) {
                 activeBtn.classList.add('active-skill');
+                // アイコンが画像の場合、画像の色も変更したい場合はここに追加CSS処理を行う
+                // 例: activeBtn.querySelector('img').style.filter = 'brightness(0) invert(1)';
             }
 
             // 3. タイトルと説明文を更新
             document.getElementById('skill-title').innerText = label;
-            document.getElementById('skill-title').classList.add('text-[#dcb66f]');
             document.getElementById('skill-desc').innerText = skillDetails[label];
         }
 
-// --- ここまで追加 ---
+
         // FAQ Render
-        function renderFAQ() {
-            const container = document.getElementById('faq-container');
-            container.innerHTML = faqData.map((item, index) => `
-                <div class="border border-[#e5e7eb] rounded-lg overflow-hidden bg-white">
-                    <button onclick="toggleFAQ(${index})" class="w-full text-left px-6 py-4 flex justify-between items-center bg-[#fffdfa] hover:bg-[#f9f7f2] transition-colors">
-                        <span class="font-bold text-[#433d3c] pr-4">Q. ${item.q}</span>
-                        <span class="text-[#8d9f86] text-xl transform transition-transform" id="faq-icon-${index}">+</span>
-                    </button>
-                    <div id="faq-answer-${index}" class="hidden bg-white px-6 py-6 border-t border-[#f0eee6] text-[#6b6564] leading-relaxed">
-                        <span class="font-bold text-[#8d9f86]">A.</span> ${item.a}
+        function renderFaq() {
+            const faqList = document.getElementById('faq-list');
+            faqData.forEach((item, index) => {
+                const isOdd = index % 2 !== 0; // 奇数番目 (0から数えて1, 3, 5...)
+                const borderColor = isOdd ? 'border-[#dcb66f]' : 'border-[#8d9f86]';
+                
+                const faqItem = document.createElement('div');
+                faqItem.className = `bg-white p-6 rounded-xl shadow-md border-t-4 ${borderColor} cursor-pointer`;
+                faqItem.innerHTML = `
+                    <div class="flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                        <h4 class="serif text-lg font-bold text-[#433d3c]">${item.q}</h4>
+                        <span class="text-xl text-[#9ca3af]">+</span>
                     </div>
-                </div>
-            `).join('');
+                    <p class="text-base text-[#6b6664] mt-3 pt-3 border-t border-[#f0eee6] hidden">${item.a}</p>
+                `;
+                faqList.appendChild(faqItem);
+            });
         }
 
-        function toggleFAQ(index) {
-            const answer = document.getElementById(`faq-answer-${index}`);
-            const icon = document.getElementById(`faq-icon-${index}`);
-            
-            if (answer.classList.contains('hidden')) {
-                answer.classList.remove('hidden');
-                answer.classList.add('block', 'animate-fade-in');
-                icon.innerText = '−';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                answer.classList.add('hidden');
-                answer.classList.remove('block');
-                icon.innerText = '+';
-            }
-        }
 
-        // Smooth Scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Comparison
+            setComparison('kokomo');
+
+            // Set default skill description to show (アイコンUIの初期設定)
+            updateSkillDesc('自己効力感');
+
+            // Setup FAQ
+            renderFaq();
+
+            // Setup Scroll Animations
+            observeAnimations();
+        });
+
+
+        // Utility
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
@@ -812,7 +526,10 @@
                 });
             }, { threshold: 0.1 });
 
-            // Apply to specific elements if needed
+            // Apply to all sections and key elements
+            document.querySelectorAll('section, .animate-fade-in-up').forEach(element => {
+                observer.observe(element);
+            });
         }
 
         // Tailwind Config for custom animations
